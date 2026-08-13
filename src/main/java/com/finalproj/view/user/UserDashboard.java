@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -17,11 +18,20 @@ public class UserDashboard {
     private BorderPane root;
     private VBox contentArea;
 
+    // =========================================================
+    // SIDEBAR BUTTONS
+    // =========================================================
+
     private Button dashboardButton;
     private Button uploadButton;
+    private Button purposeButton;
+    private Button privacyScanButton;
+    private Button redactionButton;
+    private Button selectCentreButton;
+    private Button requestStatusButton;
     private Button documentsButton;
     private Button activityButton;
-    
+    private Button privacyReceiptButton;
     private Button profileButton;
 
     // =========================================================
@@ -83,7 +93,9 @@ public class UserDashboard {
 
         Label userIcon = new Label("U");
 
-        userIcon.setAlignment(Pos.CENTER);
+        userIcon.setAlignment(
+                Pos.CENTER
+        );
 
         userIcon.setStyle(
                 "-fx-background-color: #1767C9;" +
@@ -171,7 +183,7 @@ public class UserDashboard {
         // SIDEBAR
         // =====================================================
 
-        VBox sidebar = new VBox(10);
+        VBox sidebar = new VBox(8);
 
         sidebar.setPadding(
                 new Insets(25, 15, 25, 15)
@@ -185,7 +197,9 @@ public class UserDashboard {
                 "-fx-border-width: 0 1 0 0;"
         );
 
-        Label menuTitle = new Label("WORKSPACE");
+        Label menuTitle = new Label(
+                "WORKSPACE"
+        );
 
         menuTitle.setStyle(
                 "-fx-text-fill: #53657D;" +
@@ -203,24 +217,49 @@ public class UserDashboard {
         uploadButton =
                 createMenuButton("↑   Upload Document");
 
+        purposeButton =
+                createMenuButton("▣   Purpose");
+
+        privacyScanButton =
+                createMenuButton("◉   Privacy Scan");
+
+        redactionButton =
+                createMenuButton("✎   Smart Redaction");
+
+        selectCentreButton =
+                createMenuButton("▣   Select Centre");
+
+        requestStatusButton =
+                createMenuButton("◷   Request Status");
+
         documentsButton =
                 createMenuButton("▣   My Documents");
 
         activityButton =
                 createMenuButton("◷   Activity");
 
-        
+        privacyReceiptButton =
+                createMenuButton("▤   Privacy Receipt");
 
         profileButton =
                 createMenuButton("♙   Profile");
+
+        // =====================================================
+        // SIDEBAR ADD
+        // =====================================================
 
         sidebar.getChildren().addAll(
                 menuTitle,
                 dashboardButton,
                 uploadButton,
+                purposeButton,
+                privacyScanButton,
+                redactionButton,
+                selectCentreButton,
+                requestStatusButton,
                 documentsButton,
                 activityButton,
-               
+                privacyReceiptButton,
                 profileButton
         );
 
@@ -235,42 +274,144 @@ public class UserDashboard {
         );
 
         // =====================================================
-        // BUTTON ACTIONS
+        // DASHBOARD BUTTON
         // =====================================================
 
         dashboardButton.setOnAction(e -> {
 
-            System.out.println("Dashboard clicked");
+            System.out.println(
+                    "Dashboard clicked"
+            );
 
             showDashboard();
         });
 
+        // =====================================================
+        // UPLOAD BUTTON
+        // =====================================================
+
         uploadButton.setOnAction(e -> {
 
-            System.out.println("Upload Document clicked");
+            System.out.println(
+                    "Upload Document clicked"
+            );
 
             showUploadDashboard();
         });
 
+        // =====================================================
+        // PURPOSE BUTTON
+        // =====================================================
+
+        purposeButton.setOnAction(e -> {
+
+            System.out.println(
+                    "Purpose clicked"
+            );
+
+            showPurpose();
+        });
+
+        // =====================================================
+        // PRIVACY SCAN BUTTON
+        // =====================================================
+
+        privacyScanButton.setOnAction(e -> {
+
+            System.out.println(
+                    "Privacy Scan clicked"
+            );
+
+            showPrivacyScan();
+        });
+
+        // =====================================================
+        // SMART REDACTION BUTTON
+        // =====================================================
+
+        redactionButton.setOnAction(e -> {
+
+            System.out.println(
+                    "Smart Redaction clicked"
+            );
+
+            showRedaction();
+        });
+
+        // =====================================================
+        // SELECT CENTRE BUTTON
+        // =====================================================
+
+        selectCentreButton.setOnAction(e -> {
+
+            System.out.println(
+                    "Select Centre clicked"
+            );
+
+            showSelectCentre();
+        });
+
+        // =====================================================
+        // REQUEST STATUS BUTTON
+        // =====================================================
+
+        requestStatusButton.setOnAction(e -> {
+
+            System.out.println(
+                    "Request Status clicked"
+            );
+
+            showRequestStatus();
+        });
+
+        // =====================================================
+        // DOCUMENTS BUTTON
+        // =====================================================
+
         documentsButton.setOnAction(e -> {
 
-            System.out.println("My Documents clicked");
+            System.out.println(
+                    "My Documents clicked"
+            );
 
             showDocuments();
         });
 
+        // =====================================================
+        // ACTIVITY BUTTON
+        // =====================================================
+
         activityButton.setOnAction(e -> {
 
-            System.out.println("Activity clicked");
+            System.out.println(
+                    "Activity clicked"
+            );
 
             showActivity();
         });
 
-       
+        // =====================================================
+        // PRIVACY RECEIPT BUTTON
+        // =====================================================
+
+        privacyReceiptButton.setOnAction(e -> {
+
+            System.out.println(
+                    "Privacy Receipt clicked"
+            );
+
+            showPrivacyReceipt();
+        });
+
+        // =====================================================
+        // PROFILE BUTTON
+        // =====================================================
 
         profileButton.setOnAction(e -> {
 
-            System.out.println("Profile clicked");
+            System.out.println(
+                    "Profile clicked"
+            );
 
             showProfile();
         });
@@ -280,7 +421,9 @@ public class UserDashboard {
         // =====================================================
 
         root.setTop(topBar);
+
         root.setLeft(sidebar);
+
         root.setCenter(contentArea);
 
         // =====================================================
@@ -312,7 +455,9 @@ public class UserDashboard {
 
         contentArea.getChildren().clear();
 
-        setActiveButton(dashboardButton);
+        setActiveButton(
+                dashboardButton
+        );
 
         Label heading =
                 new Label("Welcome back 👋");
@@ -476,7 +621,8 @@ public class UserDashboard {
                 "-fx-font-weight: bold;"
         );
 
-        VBox session = createSessionCard();
+        VBox session =
+                createSessionCard();
 
         contentArea.getChildren().addAll(
                 heading,
@@ -497,7 +643,9 @@ public class UserDashboard {
 
     private void showUploadDashboard() {
 
-        setActiveButton(uploadButton);
+        setActiveButton(
+                uploadButton
+        );
 
         UploadDashboard uploadDashboard =
                 new UploadDashboard();
@@ -520,12 +668,291 @@ public class UserDashboard {
     }
 
     // =========================================================
+    // PURPOSE
+    // =========================================================
+
+    private void showPurpose() {
+
+        setActiveButton(
+                purposeButton
+        );
+
+        contentArea.getChildren().clear();
+
+        Label heading =
+                new Label("Purpose");
+
+        heading.setStyle(
+                "-fx-text-fill: white;" +
+                "-fx-font-size: 30px;" +
+                "-fx-font-weight: bold;"
+        );
+
+        Label description =
+                new Label(
+                        "Understand why Privora protects your documents."
+                );
+
+        description.setStyle(
+                "-fx-text-fill: #8291A7;" +
+                "-fx-font-size: 14px;"
+        );
+
+        Label info =
+                new Label(
+                        "Privora allows users to securely share documents " +
+                        "with Xerox centres while controlling access, " +
+                        "printing and privacy."
+                );
+
+        info.setWrapText(true);
+
+        info.setStyle(
+                "-fx-text-fill: #B8C5D6;" +
+                "-fx-font-size: 13px;"
+        );
+
+        VBox card = new VBox(
+                15,
+                info
+        );
+
+        card.setPadding(
+                new Insets(25)
+        );
+
+        card.setStyle(
+                "-fx-background-color: #091428;" +
+                "-fx-background-radius: 16;" +
+                "-fx-border-color: #1C304A;" +
+                "-fx-border-radius: 16;"
+        );
+
+        contentArea.getChildren().addAll(
+                heading,
+                description,
+                card
+        );
+
+        contentArea.setSpacing(18);
+    }
+
+    // =========================================================
+    // PRIVACY SCAN
+    // =========================================================
+
+    private void showPrivacyScan() {
+
+        setActiveButton(
+                privacyScanButton
+        );
+
+        System.out.println(
+                "Opening Privacy Scan..."
+        );
+
+        PrivacyScan privacyScan =
+                new PrivacyScan();
+
+        Scene privacyScene =
+                privacyScan.getPrivacyScanScene(
+                        () -> {
+
+                            System.out.println(
+                                    "Back to Dashboard clicked"
+                            );
+
+                            showDashboard();
+                        }
+                );
+
+        root.setCenter(
+                privacyScene.getRoot()
+        );
+    }
+
+    // =========================================================
+    // SMART REDACTION
+    // =========================================================
+
+    private void showRedaction() {
+
+        setActiveButton(
+                redactionButton
+        );
+
+        contentArea.getChildren().clear();
+
+        Label heading =
+                new Label("Smart Redaction");
+
+        heading.setStyle(
+                "-fx-text-fill: white;" +
+                "-fx-font-size: 30px;" +
+                "-fx-font-weight: bold;"
+        );
+
+        Label description =
+                new Label(
+                        "Automatically hide sensitive information before sharing."
+                );
+
+        description.setStyle(
+                "-fx-text-fill: #8291A7;" +
+                "-fx-font-size: 14px;"
+        );
+
+        VBox card =
+                new VBox(
+                        15,
+                        new Label(
+                                "No document selected for redaction."
+                        )
+                );
+
+        card.setPadding(
+                new Insets(25)
+        );
+
+        card.setStyle(
+                "-fx-background-color: #091428;" +
+                "-fx-background-radius: 16;" +
+                "-fx-border-color: #1C304A;" +
+                "-fx-border-radius: 16;"
+        );
+
+        contentArea.getChildren().addAll(
+                heading,
+                description,
+                card
+        );
+
+        contentArea.setSpacing(18);
+    }
+
+    // =========================================================
+    // SELECT CENTRE
+    // =========================================================
+
+    private void showSelectCentre() {
+
+        setActiveButton(
+                selectCentreButton
+        );
+
+        System.out.println(
+                "Opening Select Centre..."
+        );
+
+        SelectCentre selectCentre =
+                new SelectCentre();
+
+        Scene centreScene =
+                selectCentre.getSelectCentreScene(
+                        () -> {
+
+                            System.out.println(
+                                    "Back to Dashboard clicked"
+                            );
+
+                            showDashboard();
+                        }
+                );
+
+        root.setCenter(
+                centreScene.getRoot()
+        );
+    }
+
+    // =========================================================
+    // REQUEST STATUS
+    // =========================================================
+
+    private void showRequestStatus() {
+
+        setActiveButton(
+                requestStatusButton
+        );
+
+        contentArea.getChildren().clear();
+
+        Label heading =
+                new Label("Request Status");
+
+        heading.setStyle(
+                "-fx-text-fill: white;" +
+                "-fx-font-size: 30px;" +
+                "-fx-font-weight: bold;"
+        );
+
+        Label description =
+                new Label(
+                        "Track the progress of your active document request."
+                );
+
+        description.setStyle(
+                "-fx-text-fill: #8291A7;" +
+                "-fx-font-size: 14px;"
+        );
+
+        VBox card =
+                new VBox(15);
+
+        card.setPadding(
+                new Insets(25)
+        );
+
+        card.setStyle(
+                "-fx-background-color: #091428;" +
+                "-fx-background-radius: 16;" +
+                "-fx-border-color: #1C304A;" +
+                "-fx-border-radius: 16;"
+        );
+
+        Label file =
+                new Label(
+                        "Aadhaar-Card.pdf"
+                );
+
+        file.setStyle(
+                "-fx-text-fill: white;" +
+                "-fx-font-size: 15px;" +
+                "-fx-font-weight: bold;"
+        );
+
+        Label status =
+                new Label(
+                        "● Printing in progress"
+                );
+
+        status.setStyle(
+                "-fx-text-fill: #19D6A3;" +
+                "-fx-font-size: 12px;"
+        );
+
+        card.getChildren().addAll(
+                file,
+                status
+        );
+
+        contentArea.getChildren().addAll(
+                heading,
+                description,
+                card
+        );
+
+        contentArea.setSpacing(18);
+    }
+
+    // =========================================================
     // MY DOCUMENTS
     // =========================================================
 
     private void showDocuments() {
 
-        setActiveButton(documentsButton);
+        setActiveButton(
+                documentsButton
+        );
 
         System.out.println(
                 "Opening My Documents..."
@@ -557,7 +984,9 @@ public class UserDashboard {
 
     private void showActivity() {
 
-        setActiveButton(activityButton);
+        setActiveButton(
+                activityButton
+        );
 
         System.out.println(
                 "Opening Activity..."
@@ -584,12 +1013,87 @@ public class UserDashboard {
     }
 
     // =========================================================
+    // PRIVACY RECEIPT
+    // =========================================================
+
+    private void showPrivacyReceipt() {
+
+        setActiveButton(
+                privacyReceiptButton
+        );
+
+        contentArea.getChildren().clear();
+
+        Label heading =
+                new Label("Privacy Receipt");
+
+        heading.setStyle(
+                "-fx-text-fill: white;" +
+                "-fx-font-size: 30px;" +
+                "-fx-font-weight: bold;"
+        );
+
+        Label description =
+                new Label(
+                        "View the privacy and security details of your document session."
+                );
+
+        description.setStyle(
+                "-fx-text-fill: #8291A7;" +
+                "-fx-font-size: 14px;"
+        );
+
+        VBox card =
+                new VBox(12);
+
+        card.setPadding(
+                new Insets(25)
+        );
+
+        card.setStyle(
+                "-fx-background-color: #091428;" +
+                "-fx-background-radius: 16;" +
+                "-fx-border-color: #1C304A;" +
+                "-fx-border-radius: 16;"
+        );
+
+        Label details =
+                new Label(
+                        "Privacy Receipt\n\n" +
+                        "Document: Aadhaar-Card.pdf\n" +
+                        "Watermark: Enabled\n" +
+                        "Download: Disabled\n" +
+                        "Print Limit: 3\n" +
+                        "Session: Secure"
+                );
+
+        details.setStyle(
+                "-fx-text-fill: #B8C5D6;" +
+                "-fx-font-size: 13px;"
+        );
+
+        card.getChildren().add(
+                details
+        );
+
+        contentArea.getChildren().addAll(
+                heading,
+                description,
+                card
+        );
+
+        contentArea.setSpacing(18);
+    }
+
+    // =========================================================
     // PROFILE
     // =========================================================
 
     private void showProfile() {
 
-        setActiveButton(profileButton);
+        setActiveButton(
+                profileButton
+        );
 
         System.out.println(
                 "Opening Profile..."
@@ -662,7 +1166,9 @@ public class UserDashboard {
                 new Insets(18)
         );
 
-        card.setPrefHeight(105);
+        card.setPrefHeight(
+                105
+        );
 
         card.setStyle(
                 "-fx-background-color: #091428;" +
@@ -725,7 +1231,9 @@ public class UserDashboard {
                 new Insets(18)
         );
 
-        card.setPrefHeight(125);
+        card.setPrefHeight(
+                125
+        );
 
         card.setStyle(
                 "-fx-background-color: #091428;" +
@@ -764,7 +1272,9 @@ public class UserDashboard {
     private VBox createSessionCard() {
 
         Label file =
-                new Label("Aadhaar-Card.pdf");
+                new Label(
+                        "Aadhaar-Card.pdf"
+                );
 
         file.setStyle(
                 "-fx-text-fill: white;" +
@@ -844,32 +1354,34 @@ public class UserDashboard {
                 "-fx-background-color: transparent;" +
                 "-fx-text-fill: #B8C5D6;" +
                 "-fx-font-size: 13px;" +
-                "-fx-padding: 11 15 11 15;"
+                "-fx-padding: 10 15 10 15;"
         );
 
         button.setOnMouseEntered(e -> {
 
-            if (!button.getStyle().contains("#1767C9")) {
+            if (!button.getStyle()
+                    .contains("#1767C9")) {
 
                 button.setStyle(
                         "-fx-background-color: #0E1D33;" +
                         "-fx-background-radius: 10;" +
                         "-fx-text-fill: #4CA8FF;" +
                         "-fx-font-size: 13px;" +
-                        "-fx-padding: 11 15 11 15;"
+                        "-fx-padding: 10 15 10 15;"
                 );
             }
         });
 
         button.setOnMouseExited(e -> {
 
-            if (!button.getStyle().contains("#1767C9")) {
+            if (!button.getStyle()
+                    .contains("#1767C9")) {
 
                 button.setStyle(
                         "-fx-background-color: transparent;" +
                         "-fx-text-fill: #B8C5D6;" +
                         "-fx-font-size: 13px;" +
-                        "-fx-padding: 11 15 11 15;"
+                        "-fx-padding: 10 15 10 15;"
                 );
             }
         });
@@ -887,9 +1399,14 @@ public class UserDashboard {
         Button[] buttons = {
                 dashboardButton,
                 uploadButton,
+                purposeButton,
+                privacyScanButton,
+                redactionButton,
+                selectCentreButton,
+                requestStatusButton,
                 documentsButton,
                 activityButton,
-                
+                privacyReceiptButton,
                 profileButton
         };
 
@@ -899,7 +1416,7 @@ public class UserDashboard {
                     "-fx-background-color: transparent;" +
                     "-fx-text-fill: #B8C5D6;" +
                     "-fx-font-size: 13px;" +
-                    "-fx-padding: 11 15 11 15;"
+                    "-fx-padding: 10 15 10 15;"
             );
         }
 
@@ -909,7 +1426,7 @@ public class UserDashboard {
                 "-fx-text-fill: white;" +
                 "-fx-font-size: 13px;" +
                 "-fx-font-weight: bold;" +
-                "-fx-padding: 11 15 11 15;"
+                "-fx-padding: 10 15 10 15;"
         );
     }
 }
