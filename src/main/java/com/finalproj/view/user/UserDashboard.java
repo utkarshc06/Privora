@@ -1,13 +1,10 @@
 package com.finalproj.view.user;
 
-import com.finalproj.view.user.Profile;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -24,6 +21,7 @@ public class UserDashboard {
     private Button uploadButton;
     private Button documentsButton;
     private Button activityButton;
+    
     private Button profileButton;
 
     // =========================================================
@@ -195,6 +193,10 @@ public class UserDashboard {
                 "-fx-font-weight: bold;"
         );
 
+        // =====================================================
+        // SIDEBAR BUTTONS
+        // =====================================================
+
         dashboardButton =
                 createMenuButton("⌂   Dashboard");
 
@@ -207,6 +209,8 @@ public class UserDashboard {
         activityButton =
                 createMenuButton("◷   Activity");
 
+        
+
         profileButton =
                 createMenuButton("♙   Profile");
 
@@ -216,6 +220,7 @@ public class UserDashboard {
                 uploadButton,
                 documentsButton,
                 activityButton,
+               
                 profileButton
         );
 
@@ -260,6 +265,8 @@ public class UserDashboard {
 
             showActivity();
         });
+
+       
 
         profileButton.setOnAction(e -> {
 
@@ -550,69 +557,30 @@ public class UserDashboard {
 
     private void showActivity() {
 
-        root.setCenter(contentArea);
-
-        contentArea.getChildren().clear();
-
         setActiveButton(activityButton);
 
-        Label heading =
-                new Label("Activity");
-
-        heading.setStyle(
-                "-fx-text-fill: white;" +
-                "-fx-font-size: 28px;" +
-                "-fx-font-weight: bold;"
+        System.out.println(
+                "Opening Activity..."
         );
 
-        Label description =
-                new Label(
-                        "Track access, printing and document sharing events."
+        Activity activity =
+                new Activity();
+
+        Scene activityScene =
+                activity.getActivityScene(
+                        () -> {
+
+                            System.out.println(
+                                    "Back to Dashboard clicked"
+                            );
+
+                            showDashboard();
+                        }
                 );
 
-        description.setStyle(
-                "-fx-text-fill: #8291A7;" +
-                "-fx-font-size: 13px;"
+        root.setCenter(
+                activityScene.getRoot()
         );
-
-        VBox activity1 =
-                createActivityRow(
-                        "Document uploaded",
-                        "Aadhaar-Card.pdf",
-                        "2 minutes ago"
-                );
-
-        VBox activity2 =
-                createActivityRow(
-                        "Print request",
-                        "Aadhaar-Card.pdf • Print 2/3",
-                        "8 minutes ago"
-                );
-
-        VBox activity3 =
-                createActivityRow(
-                        "Document accessed",
-                        "PAN-Card.pdf",
-                        "15 minutes ago"
-                );
-
-        VBox activity4 =
-                createActivityRow(
-                        "Session created",
-                        "College-ID.pdf",
-                        "32 minutes ago"
-                );
-
-        contentArea.getChildren().addAll(
-                heading,
-                description,
-                activity1,
-                activity2,
-                activity3,
-                activity4
-        );
-
-        contentArea.setSpacing(12);
     }
 
     // =========================================================
@@ -623,7 +591,9 @@ public class UserDashboard {
 
         setActiveButton(profileButton);
 
-        System.out.println("Opening Profile...");
+        System.out.println(
+                "Opening Profile..."
+        );
 
         Profile profile =
                 new Profile();
@@ -853,69 +823,6 @@ public class UserDashboard {
     }
 
     // =========================================================
-    // ACTIVITY ROW
-    // =========================================================
-
-    private VBox createActivityRow(
-            String action,
-            String document,
-            String time) {
-
-        Label actionLabel =
-                new Label(action);
-
-        actionLabel.setStyle(
-                "-fx-text-fill: white;" +
-                "-fx-font-size: 13px;" +
-                "-fx-font-weight: bold;"
-        );
-
-        Label documentLabel =
-                new Label(document);
-
-        documentLabel.setStyle(
-                "-fx-text-fill: #8291A7;" +
-                "-fx-font-size: 11px;"
-        );
-
-        Label timeLabel =
-                new Label(time);
-
-        timeLabel.setStyle(
-                "-fx-text-fill: #596B83;" +
-                "-fx-font-size: 10px;"
-        );
-
-        HBox row =
-                new HBox(
-                        20,
-                        actionLabel,
-                        documentLabel,
-                        timeLabel
-                );
-
-        row.setAlignment(
-                Pos.CENTER_LEFT
-        );
-
-        VBox container =
-                new VBox(row);
-
-        container.setPadding(
-                new Insets(15)
-        );
-
-        container.setStyle(
-                "-fx-background-color: #091428;" +
-                "-fx-background-radius: 14;" +
-                "-fx-border-color: #1C304A;" +
-                "-fx-border-radius: 14;"
-        );
-
-        return container;
-    }
-
-    // =========================================================
     // SIDEBAR BUTTON
     // =========================================================
 
@@ -982,6 +889,7 @@ public class UserDashboard {
                 uploadButton,
                 documentsButton,
                 activityButton,
+                
                 profileButton
         };
 

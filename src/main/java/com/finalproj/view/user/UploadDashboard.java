@@ -5,8 +5,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -323,9 +321,9 @@ public class UploadDashboard {
 
         HBox settingsBox = new HBox(15);
 
-        // ---------------------------------------------------------
+        // =========================================================
         // ACCESS SETTINGS
-        // ---------------------------------------------------------
+        // =========================================================
 
         VBox accessCard =
                 createSettingsCard();
@@ -381,9 +379,9 @@ public class UploadDashboard {
                 printSpinner
         );
 
-        // ---------------------------------------------------------
+        // =========================================================
         // PRIVACY SETTINGS
-        // ---------------------------------------------------------
+        // =========================================================
 
         VBox privacyCard =
                 createSettingsCard();
@@ -477,6 +475,10 @@ public class UploadDashboard {
                 "-fx-effect: dropshadow(gaussian, rgba(33,136,255,0.45), 20, 0.5, 0, 4);"
         );
 
+        // =========================================================
+        // CREATE SESSION ACTION
+        // =========================================================
+
         createSession.setOnAction(e -> {
 
             System.out.println(
@@ -497,15 +499,6 @@ public class UploadDashboard {
 
                 return;
             }
-
-            statusLabel.setStyle(
-                    "-fx-text-fill: #19D6A3;" +
-                    "-fx-font-size: 12px;"
-            );
-
-            statusLabel.setText(
-                    "Secure session created successfully!"
-            );
 
             System.out.println(
                     "Expiry: " +
@@ -532,10 +525,43 @@ public class UploadDashboard {
                     privacyScan.isSelected()
             );
 
-            /*
-             * Firebase/API connection
-             * will be added here later.
-             */
+            statusLabel.setStyle(
+                    "-fx-text-fill: #19D6A3;" +
+                    "-fx-font-size: 12px;"
+            );
+
+            statusLabel.setText(
+                    "Secure session created successfully!"
+            );
+
+            // =====================================================
+            // OPEN SELECT CENTRE
+            // =====================================================
+
+            SelectCentre selectCentre =
+                    new SelectCentre();
+
+            Scene selectCentreScene =
+                    selectCentre.getSelectCentreScene(
+                            () -> {
+
+                                System.out.println(
+                                        "Back to Dashboard clicked"
+                                );
+
+                                backToDashboard.run();
+                            }
+                    );
+
+            root.setCenter(
+                    createScrollPane(
+                            selectCentreScene.getRoot()
+                    )
+            );
+
+            System.out.println(
+                    "Opening Select Xerox Centre..."
+            );
         });
 
         // =========================================================
@@ -556,10 +582,12 @@ public class UploadDashboard {
         // =========================================================
 
         root.setTop(topBar);
-
         root.setLeft(sidebar);
 
-        root.setCenter(content);
+        // MAIN CONTENT WITH SCROLL
+        root.setCenter(
+                createScrollPane(content)
+        );
 
         // =========================================================
         // SCENE
@@ -573,6 +601,35 @@ public class UploadDashboard {
                 );
 
         return uploadScene;
+    }
+
+    // =============================================================
+    // SCROLL PANE
+    // =============================================================
+
+    private ScrollPane createScrollPane(
+            javafx.scene.Node node) {
+
+        ScrollPane scrollPane =
+                new ScrollPane(node);
+
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(false);
+
+        scrollPane.setHbarPolicy(
+                ScrollPane.ScrollBarPolicy.NEVER
+        );
+
+        scrollPane.setVbarPolicy(
+                ScrollPane.ScrollBarPolicy.AS_NEEDED
+        );
+
+        scrollPane.setStyle(
+                "-fx-background-color: transparent;" +
+                "-fx-background: transparent;"
+        );
+
+        return scrollPane;
     }
 
     // =============================================================
