@@ -1,15 +1,17 @@
 package com.finalproj.view.user;
 
+import com.finalproj.view.user.Profile;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import com.finalproj.view.user.Profile;
 
 public class UserDashboard {
 
@@ -619,93 +621,28 @@ public class UserDashboard {
 
     private void showProfile() {
 
-        root.setCenter(contentArea);
-
-        contentArea.getChildren().clear();
-
         setActiveButton(profileButton);
 
-        Label heading =
-                new Label("Profile");
+        System.out.println("Opening Profile...");
 
-        heading.setStyle(
-                "-fx-text-fill: white;" +
-                "-fx-font-size: 28px;" +
-                "-fx-font-weight: bold;"
-        );
+        Profile profile =
+                new Profile();
 
-        Label description =
-                new Label(
-                        "Manage your PRIVORA account information."
+        Scene profileScene =
+                profile.getProfileScene(
+                        () -> {
+
+                            System.out.println(
+                                    "Back to Dashboard clicked"
+                            );
+
+                            showDashboard();
+                        }
                 );
 
-        description.setStyle(
-                "-fx-text-fill: #8291A7;" +
-                "-fx-font-size: 13px;"
+        root.setCenter(
+                profileScene.getRoot()
         );
-
-        VBox profileCard =
-                new VBox(15);
-
-        profileCard.setPadding(
-                new Insets(25)
-        );
-
-        profileCard.setMaxWidth(600);
-
-        profileCard.setStyle(
-                "-fx-background-color: #091428;" +
-                "-fx-background-radius: 18;" +
-                "-fx-border-color: #1C304A;" +
-                "-fx-border-radius: 18;"
-        );
-
-        Label name =
-                new Label("Name: User");
-
-        Label email =
-                new Label("Email: user@privora.app");
-
-        Label role =
-                new Label("Role: Document Owner");
-
-        Label status =
-                new Label("Account Status: Active");
-
-        name.setStyle(
-                "-fx-text-fill: white;" +
-                "-fx-font-size: 14px;"
-        );
-
-        email.setStyle(
-                "-fx-text-fill: #A5B4C7;" +
-                "-fx-font-size: 13px;"
-        );
-
-        role.setStyle(
-                "-fx-text-fill: #A5B4C7;" +
-                "-fx-font-size: 13px;"
-        );
-
-        status.setStyle(
-                "-fx-text-fill: #19D6A3;" +
-                "-fx-font-size: 13px;"
-        );
-
-        profileCard.getChildren().addAll(
-                name,
-                email,
-                role,
-                status
-        );
-
-        contentArea.getChildren().addAll(
-                heading,
-                description,
-                profileCard
-        );
-
-        contentArea.setSpacing(15);
     }
 
     // =========================================================
