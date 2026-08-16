@@ -5,20 +5,20 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class Profile {
 
     private Scene profileScene;
 
-    // =========================================================
-    // PROFILE SCENE
-    // =========================================================
-
     public Scene getProfileScene(Runnable backToDashboard) {
+
+        // =========================================================
+        // ROOT
+        // =========================================================
 
         BorderPane root = new BorderPane();
 
@@ -26,351 +26,118 @@ public class Profile {
                 "-fx-background-color: linear-gradient(to bottom right, #020713, #06152D, #020713);"
         );
 
-        // =====================================================
-        // TOP SECTION
-        // =====================================================
+        // =========================================================
+        // TOP BAR
+        // =========================================================
 
-        VBox topSection = new VBox(5);
+        HBox topBar = new HBox();
 
-        topSection.setPadding(
-                new Insets(30, 35, 10, 35)
+        topBar.setPadding(
+                new Insets(15, 28, 15, 28)
         );
 
-        Label heading =
-                new Label("Profile");
-
-        heading.setStyle(
-                "-fx-text-fill: white;" +
-                "-fx-font-size: 30px;" +
-                "-fx-font-weight: bold;"
+        topBar.setAlignment(
+                Pos.CENTER_LEFT
         );
 
-        Label description =
-                new Label(
-                        "Manage your PRIVORA account information."
-                );
+        Label logo = new Label("PRIVORA");
 
-        description.setStyle(
-                "-fx-text-fill: #8291A7;" +
-                "-fx-font-size: 13px;"
-        );
-
-        topSection.getChildren().addAll(
-                heading,
-                description
-        );
-
-        // =====================================================
-        // PROFILE CARD
-        // =====================================================
-
-        VBox profileCard =
-                new VBox(20);
-
-        profileCard.setPadding(
-                new Insets(30)
-        );
-
-        profileCard.setMaxWidth(700);
-
-        profileCard.setStyle(
-                "-fx-background-color: #091428;" +
-                "-fx-background-radius: 18;" +
-                "-fx-border-color: #1C304A;" +
-                "-fx-border-radius: 18;"
-        );
-
-        // =====================================================
-        // PROFILE HEADER
-        // =====================================================
-
-        Label profileIcon =
-                new Label("U");
-
-        profileIcon.setAlignment(
-                Pos.CENTER
-        );
-
-        profileIcon.setStyle(
-                "-fx-background-color: #1767C9;" +
-                "-fx-background-radius: 50%;" +
-                "-fx-text-fill: white;" +
-                "-fx-font-size: 24px;" +
-                "-fx-font-weight: bold;" +
-                "-fx-min-width: 65px;" +
-                "-fx-min-height: 65px;"
-        );
-
-        VBox profileName =
-                new VBox(4);
-
-        Label name =
-                new Label("User");
-
-        name.setStyle(
+        logo.setStyle(
                 "-fx-text-fill: white;" +
                 "-fx-font-size: 20px;" +
                 "-fx-font-weight: bold;"
         );
 
-        Label role =
-                new Label("Document Owner");
-
-        role.setStyle(
-                "-fx-text-fill: #71829A;" +
-                "-fx-font-size: 12px;"
+        Label pageTitle = new Label(
+                "  /  Profile"
         );
 
-        profileName.getChildren().addAll(
-                name,
-                role
+        pageTitle.setStyle(
+                "-fx-text-fill: #7E8DA3;" +
+                "-fx-font-size: 13px;"
         );
 
-        HBox profileHeader =
-                new HBox(
-                        18,
-                        profileIcon,
-                        profileName
-                );
+        HBox titleBox = new HBox(
+                5,
+                logo,
+                pageTitle
+        );
 
-        profileHeader.setAlignment(
+        titleBox.setAlignment(
                 Pos.CENTER_LEFT
         );
 
-        // =====================================================
-        // SEPARATOR
-        // =====================================================
-
-        Separator separator =
-                new Separator();
-
-        separator.setStyle(
-                "-fx-background-color: #1C304A;"
-        );
-
-        // =====================================================
-        // ACCOUNT INFORMATION
-        // =====================================================
-
-        Label accountTitle =
-                new Label("Account Information");
-
-        accountTitle.setStyle(
-                "-fx-text-fill: white;" +
-                "-fx-font-size: 16px;" +
-                "-fx-font-weight: bold;"
-        );
-
-        // NAME
-
-        Label nameTitle =
-                new Label("Full Name");
-
-        nameTitle.setStyle(
-                "-fx-text-fill: #71829A;" +
-                "-fx-font-size: 11px;"
-        );
-
-        Label nameValue =
-                new Label("User");
-
-        nameValue.setStyle(
-                "-fx-text-fill: #D9E2EF;" +
-                "-fx-font-size: 13px;"
-        );
-
-        VBox nameBox =
-                new VBox(
-                        5,
-                        nameTitle,
-                        nameValue
-                );
-
-        // EMAIL
-
-        Label emailTitle =
-                new Label("Email Address");
-
-        emailTitle.setStyle(
-                "-fx-text-fill: #71829A;" +
-                "-fx-font-size: 11px;"
-        );
-
-        Label emailValue =
-                new Label("user@privora.app");
-
-        emailValue.setStyle(
-                "-fx-text-fill: #D9E2EF;" +
-                "-fx-font-size: 13px;"
-        );
-
-        VBox emailBox =
-                new VBox(
-                        5,
-                        emailTitle,
-                        emailValue
-                );
-
-        // ROLE
-
-        Label roleTitle =
-                new Label("Account Role");
-
-        roleTitle.setStyle(
-                "-fx-text-fill: #71829A;" +
-                "-fx-font-size: 11px;"
-        );
-
-        Label roleValue =
-                new Label("Document Owner");
-
-        roleValue.setStyle(
-                "-fx-text-fill: #D9E2EF;" +
-                "-fx-font-size: 13px;"
-        );
-
-        VBox roleBox =
-                new VBox(
-                        5,
-                        roleTitle,
-                        roleValue
-                );
-
-        // STATUS
-
-        Label statusTitle =
-                new Label("Account Status");
-
-        statusTitle.setStyle(
-                "-fx-text-fill: #71829A;" +
-                "-fx-font-size: 11px;"
-        );
-
-        Label statusValue =
-                new Label("● Active");
-
-        statusValue.setStyle(
-                "-fx-text-fill: #19D6A3;" +
-                "-fx-font-size: 13px;" +
-                "-fx-font-weight: bold;"
-        );
-
-        VBox statusBox =
-                new VBox(
-                        5,
-                        statusTitle,
-                        statusValue
-                );
-
-        // =====================================================
-        // INFORMATION CONTAINER
-        // =====================================================
-
-        VBox information =
-                new VBox(
-                        18,
-                        nameBox,
-                        emailBox,
-                        roleBox,
-                        statusBox
-                );
-
-        // =====================================================
+        // =========================================================
         // BACK BUTTON
-        // =====================================================
+        // =========================================================
 
-        Button backButton =
-                new Button("←  Back to Dashboard");
+        Button backButton = new Button(
+                "← Dashboard"
+        );
 
         backButton.setStyle(
-                "-fx-background-color: #1767C9;" +
-                "-fx-background-radius: 10;" +
-                "-fx-text-fill: white;" +
-                "-fx-font-size: 13px;" +
-                "-fx-font-weight: bold;" +
-                "-fx-padding: 10 18 10 18;"
+                "-fx-background-color: #0B162A;" +
+                "-fx-border-color: #263653;" +
+                "-fx-border-radius: 15;" +
+                "-fx-background-radius: 15;" +
+                "-fx-text-fill: #B8C5D6;" +
+                "-fx-padding: 8 16 8 16;"
         );
 
-        backButton.setOnMouseEntered(e -> {
-
-            backButton.setStyle(
-                    "-fx-background-color: #2186F3;" +
-                    "-fx-background-radius: 10;" +
-                    "-fx-text-fill: white;" +
-                    "-fx-font-size: 13px;" +
-                    "-fx-font-weight: bold;" +
-                    "-fx-padding: 10 18 10 18;"
-            );
-        });
-
-        backButton.setOnMouseExited(e -> {
-
-            backButton.setStyle(
-                    "-fx-background-color: #1767C9;" +
-                    "-fx-background-radius: 10;" +
-                    "-fx-text-fill: white;" +
-                    "-fx-font-size: 13px;" +
-                    "-fx-font-weight: bold;" +
-                    "-fx-padding: 10 18 10 18;"
-            );
-        });
-
         backButton.setOnAction(e -> {
-
-            System.out.println(
-                    "Back to Dashboard clicked"
-            );
-
             backToDashboard.run();
         });
 
-        // =====================================================
-        // ADD EVERYTHING TO PROFILE CARD
-        // =====================================================
+        HBox.setHgrow(
+                titleBox,
+                Priority.ALWAYS
+        );
 
-        profileCard.getChildren().addAll(
-                profileHeader,
-                separator,
-                accountTitle,
-                information,
+        topBar.getChildren().addAll(
+                titleBox,
                 backButton
         );
 
-        // =====================================================
-        // CENTER AREA
-        // =====================================================
+        // =========================================================
+        // MAIN CONTENT
+        // =========================================================
 
-        VBox centerContent =
-                new VBox(
-                        20,
-                        profileCard
-                );
+        VBox content = new VBox();
 
-        centerContent.setPadding(
-                new Insets(15, 35, 35, 35)
+        content.setAlignment(
+                Pos.CENTER
         );
 
-        centerContent.setAlignment(
-                Pos.TOP_LEFT
+        Label profileLabel = new Label(
+                "Profile"
         );
 
-        // =====================================================
+        profileLabel.setStyle(
+                "-fx-text-fill: white;" +
+                "-fx-font-size: 30px;" +
+                "-fx-font-weight: bold;"
+        );
+
+        content.getChildren().add(
+                profileLabel
+        );
+
+        // =========================================================
         // ROOT
-        // =====================================================
+        // =========================================================
 
-        root.setTop(topSection);
-        root.setCenter(centerContent);
+        root.setTop(topBar);
+        root.setCenter(content);
 
-        // =====================================================
+        // =========================================================
         // SCENE
-        // =====================================================
+        // =========================================================
 
-        profileScene =
-                new Scene(
-                        root,
-                        1100,
-                        600
-                );
+        profileScene = new Scene(
+                root,
+                1300,
+                700
+        );
 
         return profileScene;
     }

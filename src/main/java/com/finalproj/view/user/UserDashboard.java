@@ -5,7 +5,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -18,10 +17,19 @@ public class UserDashboard {
     private BorderPane root;
     private VBox contentArea;
 
+    // =========================================================
+    // SIDEBAR BUTTONS
+    // =========================================================
+
     private Button dashboardButton;
     private Button uploadButton;
+    private Button purposeButton;
+    private Button privacyScanButton;
+    private Button smartRedactionButton;
+    private Button selectCentreButton;
+    private Button qrSessionButton;
+    private Button requestStatusButton;
     private Button documentsButton;
-    private Button activityButton;
     private Button privacyReceiptButton;
     private Button profileButton;
 
@@ -84,9 +92,7 @@ public class UserDashboard {
 
         Label userIcon = new Label("U");
 
-        userIcon.setAlignment(
-                Pos.CENTER
-        );
+        userIcon.setAlignment(Pos.CENTER);
 
         userIcon.setStyle(
                 "-fx-background-color: #1767C9;" +
@@ -105,9 +111,7 @@ public class UserDashboard {
                 "-fx-font-weight: bold;"
         );
 
-        Label userRole = new Label(
-                "Document Owner"
-        );
+        Label userRole = new Label("Document Owner");
 
         userRole.setStyle(
                 "-fx-text-fill: #71829A;" +
@@ -134,8 +138,7 @@ public class UserDashboard {
         // LOGOUT
         // =====================================================
 
-        Button logoutButton =
-                new Button("Logout");
+        Button logoutButton = new Button("Logout");
 
         logoutButton.setStyle(
                 "-fx-background-color: #0B162A;" +
@@ -148,9 +151,7 @@ public class UserDashboard {
 
         logoutButton.setOnAction(e -> {
 
-            System.out.println(
-                    "Logout clicked"
-            );
+            System.out.println("Logout clicked");
 
             logout.run();
         });
@@ -179,106 +180,13 @@ public class UserDashboard {
         // SIDEBAR
         // =====================================================
 
-        VBox sidebarContent =
-                new VBox(10);
+        VBox sidebar = new VBox(8);
 
-        sidebarContent.setPadding(
+        sidebar.setPadding(
                 new Insets(25, 15, 25, 15)
         );
 
-        Label menuTitle =
-                new Label("WORKSPACE");
-
-        menuTitle.setStyle(
-                "-fx-text-fill: #53657D;" +
-                "-fx-font-size: 10px;" +
-                "-fx-font-weight: bold;"
-        );
-
-        // =====================================================
-        // SIDEBAR BUTTONS
-        // =====================================================
-
-        dashboardButton =
-                createMenuButton(
-                        "⌂   Dashboard"
-                );
-
-        uploadButton =
-                createMenuButton(
-                        "↑   Upload Document"
-                );
-
-        documentsButton =
-                createMenuButton(
-                        "▣   My Documents"
-                );
-
-        activityButton =
-                createMenuButton(
-                        "◷   Activity"
-                );
-
-        privacyReceiptButton =
-                createMenuButton(
-                        "▤   Privacy Receipt"
-                );
-
-        profileButton =
-                createMenuButton(
-                        "♙   Profile"
-                );
-
-        sidebarContent.getChildren().addAll(
-                menuTitle,
-                dashboardButton,
-                uploadButton,
-                documentsButton,
-                activityButton,
-                privacyReceiptButton,
-                profileButton
-        );
-
-        // =====================================================
-        // SIDEBAR SCROLL
-        // =====================================================
-
-        ScrollPane sidebarScroll =
-                new ScrollPane(
-                        sidebarContent
-                );
-
-        sidebarScroll.setFitToWidth(
-                true
-        );
-
-        sidebarScroll.setHbarPolicy(
-                ScrollPane.ScrollBarPolicy.NEVER
-        );
-
-        sidebarScroll.setVbarPolicy(
-                ScrollPane.ScrollBarPolicy.AS_NEEDED
-        );
-
-        sidebarScroll.setStyle(
-                "-fx-background-color: transparent;" +
-                "-fx-background: transparent;" +
-                "-fx-border-color: transparent;"
-        );
-
-        sidebarScroll.setPrefWidth(
-                220
-        );
-
-        // =====================================================
-        // SIDEBAR BACKGROUND
-        // =====================================================
-
-        VBox sidebar = new VBox();
-
-        sidebar.setPrefWidth(
-                220
-        );
+        sidebar.setPrefWidth(235);
 
         sidebar.setStyle(
                 "-fx-background-color: rgba(5,15,32,0.95);" +
@@ -286,24 +194,102 @@ public class UserDashboard {
                 "-fx-border-width: 0 1 0 0;"
         );
 
-        sidebar.getChildren().add(
-                sidebarScroll
+        // =====================================================
+        // WORKSPACE TITLE
+        // =====================================================
+
+        Label workspaceTitle =
+                new Label("WORKSPACE");
+
+        workspaceTitle.setStyle(
+                "-fx-text-fill: #53657D;" +
+                "-fx-font-size: 10px;" +
+                "-fx-font-weight: bold;"
+        );
+
+        // =====================================================
+        // MAIN BUTTONS
+        // =====================================================
+
+        dashboardButton =
+                createMenuButton("⌂   Dashboard");
+
+        uploadButton =
+                createMenuButton("↑   Upload Document");
+
+        documentsButton =
+                createMenuButton("▣   My Documents");
+
+        profileButton =
+                createMenuButton("♙   Profile");
+
+        // =====================================================
+        // SECURE WORKFLOW
+        // =====================================================
+
+        Label securityTitle =
+                new Label("SECURE WORKFLOW");
+
+        securityTitle.setStyle(
+                "-fx-text-fill: #53657D;" +
+                "-fx-font-size: 10px;" +
+                "-fx-font-weight: bold;" +
+                "-fx-padding: 15 0 3 0;"
+        );
+
+        selectCentreButton =
+                createMenuButton("⌖   Select Centre");
+
+        requestStatusButton =
+                createMenuButton("⇥   Request Status");
+
+        purposeButton =
+                createMenuButton("▤   Purpose");
+
+        privacyScanButton =
+                createMenuButton("◉   Privacy Scan");
+
+        privacyReceiptButton =
+                createMenuButton("✓   Privacy Receipt");
+
+        qrSessionButton =
+                createMenuButton("▣   QR Session");
+
+        smartRedactionButton =
+                createMenuButton("✦   Smart Redaction");
+
+        // =====================================================
+        // SIDEBAR CONTENT
+        // =====================================================
+
+        sidebar.getChildren().addAll(
+
+                workspaceTitle,
+
+                dashboardButton,
+                uploadButton,
+                documentsButton,
+                profileButton,
+
+                securityTitle,
+
+                selectCentreButton,
+                requestStatusButton,
+                purposeButton,
+                privacyScanButton,
+                privacyReceiptButton,
+                qrSessionButton,
+                smartRedactionButton
         );
 
         // =====================================================
         // CONTENT AREA
         // =====================================================
 
-        contentArea =
-                new VBox();
+        contentArea = new VBox();
 
         contentArea.setPadding(
-                new Insets(
-                        30,
-                        35,
-                        35,
-                        35
-                )
+                new Insets(30, 35, 35, 35)
         );
 
         // =====================================================
@@ -312,73 +298,92 @@ public class UserDashboard {
 
         dashboardButton.setOnAction(e -> {
 
-            System.out.println(
-                    "Dashboard clicked"
-            );
+            System.out.println("Dashboard clicked");
 
             showDashboard();
         });
 
         uploadButton.setOnAction(e -> {
 
-            System.out.println(
-                    "Upload Document clicked"
-            );
+            System.out.println("Upload Document clicked");
 
             showUploadDashboard();
         });
 
         documentsButton.setOnAction(e -> {
 
-            System.out.println(
-                    "My Documents clicked"
-            );
+            System.out.println("My Documents clicked");
 
             showDocuments();
         });
 
-        activityButton.setOnAction(e -> {
+        profileButton.setOnAction(e -> {
 
-            System.out.println(
-                    "Activity clicked"
-            );
+            System.out.println("Profile clicked");
 
-            showActivity();
+            showProfile();
+        });
+
+        // =====================================================
+        // SECURE WORKFLOW ACTIONS
+        // =====================================================
+
+        selectCentreButton.setOnAction(e -> {
+
+            System.out.println("Select Centre clicked");
+
+            showSelectCentre();
+        });
+
+        requestStatusButton.setOnAction(e -> {
+
+            System.out.println("Request Status clicked");
+
+            showRequestStatus();
+        });
+
+        purposeButton.setOnAction(e -> {
+
+            System.out.println("Purpose clicked");
+
+            showPurpose();
+        });
+
+        privacyScanButton.setOnAction(e -> {
+
+            System.out.println("Privacy Scan clicked");
+
+            showPrivacyScan();
         });
 
         privacyReceiptButton.setOnAction(e -> {
 
-            System.out.println(
-                    "Privacy Receipt clicked"
-            );
+            System.out.println("Privacy Receipt clicked");
 
             showPrivacyReceipt();
         });
 
-        profileButton.setOnAction(e -> {
+        qrSessionButton.setOnAction(e -> {
 
-            System.out.println(
-                    "Profile clicked"
-            );
+            System.out.println("QR Session clicked");
 
-            showProfile();
+            showQRSession();
+        });
+
+        smartRedactionButton.setOnAction(e -> {
+
+            System.out.println("Smart Redaction clicked");
+
+            showSmartRedaction();
         });
 
         // =====================================================
         // ROOT
         // =====================================================
 
-        root.setTop(
-                topBar
-        );
-
-        root.setLeft(
-                sidebar
-        );
-
-        root.setCenter(
-                contentArea
-        );
+        root.setTop(topBar);
+        root.setLeft(sidebar);
+        root.setCenter(contentArea);
 
         // =====================================================
         // DEFAULT PAGE
@@ -390,12 +395,11 @@ public class UserDashboard {
         // SCENE
         // =====================================================
 
-        dashboardScene =
-                new Scene(
-                        root,
-                        1300,
-                        700
-                );
+        dashboardScene = new Scene(
+                root,
+                1300,
+                700
+        );
 
         return dashboardScene;
     }
@@ -406,22 +410,14 @@ public class UserDashboard {
 
     private void showDashboard() {
 
-        root.setCenter(
-                createScrollableContent(
-                        contentArea
-                )
-        );
+        root.setCenter(contentArea);
 
         contentArea.getChildren().clear();
 
-        setActiveButton(
-                dashboardButton
-        );
+        setActiveButton(dashboardButton);
 
         Label heading =
-                new Label(
-                        "Welcome back 👋"
-                );
+                new Label("Welcome back 👋");
 
         heading.setStyle(
                 "-fx-text-fill: white;" +
@@ -443,8 +439,7 @@ public class UserDashboard {
         // STATS
         // =====================================================
 
-        HBox stats =
-                new HBox(15);
+        HBox stats = new HBox(15);
 
         VBox documents =
                 createStatCard(
@@ -481,34 +476,17 @@ public class UserDashboard {
                 privacy
         );
 
-        HBox.setHgrow(
-                documents,
-                Priority.ALWAYS
-        );
-
-        HBox.setHgrow(
-                active,
-                Priority.ALWAYS
-        );
-
-        HBox.setHgrow(
-                prints,
-                Priority.ALWAYS
-        );
-
-        HBox.setHgrow(
-                privacy,
-                Priority.ALWAYS
-        );
+        HBox.setHgrow(documents, Priority.ALWAYS);
+        HBox.setHgrow(active, Priority.ALWAYS);
+        HBox.setHgrow(prints, Priority.ALWAYS);
+        HBox.setHgrow(privacy, Priority.ALWAYS);
 
         // =====================================================
         // QUICK ACTIONS
         // =====================================================
 
         Label quickTitle =
-                new Label(
-                        "Quick Actions"
-                );
+                new Label("Quick Actions");
 
         quickTitle.setStyle(
                 "-fx-text-fill: white;" +
@@ -516,8 +494,7 @@ public class UserDashboard {
                 "-fx-font-weight: bold;"
         );
 
-        HBox actions =
-                new HBox(15);
+        HBox actions = new HBox(15);
 
         VBox uploadCard =
                 createActionCard(
@@ -533,11 +510,11 @@ public class UserDashboard {
                         "View your uploaded documents"
                 );
 
-        VBox activityCard =
+        VBox privacyCard =
                 createActionCard(
-                        "◷",
-                        "Recent Activity",
-                        "Check your document activity"
+                        "◉",
+                        "Privacy Scan",
+                        "Check your document privacy"
                 );
 
         uploadCard.setOnMouseClicked(
@@ -548,39 +525,26 @@ public class UserDashboard {
                 e -> showDocuments()
         );
 
-        activityCard.setOnMouseClicked(
-                e -> showActivity()
+        privacyCard.setOnMouseClicked(
+                e -> showPrivacyScan()
         );
 
         actions.getChildren().addAll(
                 uploadCard,
                 documentCard,
-                activityCard
+                privacyCard
         );
 
-        HBox.setHgrow(
-                uploadCard,
-                Priority.ALWAYS
-        );
-
-        HBox.setHgrow(
-                documentCard,
-                Priority.ALWAYS
-        );
-
-        HBox.setHgrow(
-                activityCard,
-                Priority.ALWAYS
-        );
+        HBox.setHgrow(uploadCard, Priority.ALWAYS);
+        HBox.setHgrow(documentCard, Priority.ALWAYS);
+        HBox.setHgrow(privacyCard, Priority.ALWAYS);
 
         // =====================================================
         // RECENT SESSION
         // =====================================================
 
         Label recentTitle =
-                new Label(
-                        "Recent Secure Sessions"
-                );
+                new Label("Recent Secure Sessions");
 
         recentTitle.setStyle(
                 "-fx-text-fill: white;" +
@@ -601,71 +565,27 @@ public class UserDashboard {
                 session
         );
 
-        contentArea.setSpacing(
-                18
-        );
+        contentArea.setSpacing(18);
     }
 
     // =========================================================
-    // SCROLLABLE CONTENT
-    // =========================================================
-
-    private ScrollPane createScrollableContent(
-            VBox content) {
-
-        ScrollPane scrollPane =
-                new ScrollPane(
-                        content
-                );
-
-        scrollPane.setFitToWidth(
-                true
-        );
-
-        scrollPane.setHbarPolicy(
-                ScrollPane.ScrollBarPolicy.NEVER
-        );
-
-        scrollPane.setVbarPolicy(
-                ScrollPane.ScrollBarPolicy.AS_NEEDED
-        );
-
-        scrollPane.setStyle(
-                "-fx-background-color: transparent;" +
-                "-fx-background: transparent;" +
-                "-fx-border-color: transparent;"
-        );
-
-        return scrollPane;
-    }
-
-    // =========================================================
-    // UPLOAD DASHBOARD
+    // UPLOAD DOCUMENT
     // =========================================================
 
     private void showUploadDashboard() {
 
-        setActiveButton(
-                uploadButton
-        );
+        setActiveButton(uploadButton);
 
         UploadDashboard uploadDashboard =
                 new UploadDashboard();
 
-        Scene uploadScene =
+        Scene scene =
                 uploadDashboard.getUploadScene(
-                        () -> {
-
-                            System.out.println(
-                                    "Back to Dashboard clicked"
-                            );
-
-                            showDashboard();
-                        }
+                        () -> showDashboard()
                 );
 
         root.setCenter(
-                uploadScene.getRoot()
+                scene.getRoot()
         );
     }
 
@@ -675,99 +595,18 @@ public class UserDashboard {
 
     private void showDocuments() {
 
-        setActiveButton(
-                documentsButton
-        );
-
-        System.out.println(
-                "Opening My Documents..."
-        );
+        setActiveButton(documentsButton);
 
         MyDocuments myDocuments =
                 new MyDocuments();
 
-        Scene documentsScene =
+        Scene scene =
                 myDocuments.getDocumentsScene(
-                        () -> {
-
-                            System.out.println(
-                                    "Back to Dashboard clicked"
-                            );
-
-                            showDashboard();
-                        }
+                        () -> showDashboard()
                 );
 
         root.setCenter(
-                documentsScene.getRoot()
-        );
-    }
-
-    // =========================================================
-    // ACTIVITY
-    // =========================================================
-
-    private void showActivity() {
-
-        setActiveButton(
-                activityButton
-        );
-
-        System.out.println(
-                "Opening Activity..."
-        );
-
-        Activity activity =
-                new Activity();
-
-        Scene activityScene =
-                activity.getActivityScene(
-                        () -> {
-
-                            System.out.println(
-                                    "Back to Dashboard clicked"
-                            );
-
-                            showDashboard();
-                        }
-                );
-
-        root.setCenter(
-                activityScene.getRoot()
-        );
-    }
-
-    // =========================================================
-    // PRIVACY RECEIPT
-    // =========================================================
-
-    private void showPrivacyReceipt() {
-
-        setActiveButton(
-                privacyReceiptButton
-        );
-
-        System.out.println(
-                "Opening Privacy Receipt..."
-        );
-
-        PrivacyReceipt privacyReceipt =
-                new PrivacyReceipt();
-
-        Scene receiptScene =
-                privacyReceipt.getPrivacyReceiptScene(
-                        () -> {
-
-                            System.out.println(
-                                    "Back to Dashboard clicked"
-                            );
-
-                            showDashboard();
-                        }
-                );
-
-        root.setCenter(
-                receiptScene.getRoot()
+                scene.getRoot()
         );
     }
 
@@ -777,31 +616,165 @@ public class UserDashboard {
 
     private void showProfile() {
 
-        setActiveButton(
-                profileButton
-        );
-
-        System.out.println(
-                "Opening Profile..."
-        );
+        setActiveButton(profileButton);
 
         Profile profile =
                 new Profile();
 
-        Scene profileScene =
+        Scene scene =
                 profile.getProfileScene(
-                        () -> {
-
-                            System.out.println(
-                                    "Back to Dashboard clicked"
-                            );
-
-                            showDashboard();
-                        }
+                        () -> showDashboard()
                 );
 
         root.setCenter(
-                profileScene.getRoot()
+                scene.getRoot()
+        );
+    }
+
+    // =========================================================
+    // SELECT CENTRE
+    // =========================================================
+
+    private void showSelectCentre() {
+
+        setActiveButton(selectCentreButton);
+
+        SelectCentre selectCentre =
+                new SelectCentre();
+
+        Scene scene =
+                selectCentre.getSelectCentreScene(
+                        () -> showDashboard()
+                );
+
+        root.setCenter(
+                scene.getRoot()
+        );
+    }
+
+    // =========================================================
+    // REQUEST STATUS
+    // =========================================================
+
+    private void showRequestStatus() {
+
+        setActiveButton(requestStatusButton);
+
+        RequestStatus requestStatus =
+                new RequestStatus();
+
+        Scene scene =
+                requestStatus.getRequestStatusScene(
+                        () -> showDashboard()
+                );
+
+        root.setCenter(
+                scene.getRoot()
+        );
+    }
+
+    // =========================================================
+    // PURPOSE
+    // =========================================================
+
+    private void showPurpose() {
+
+        setActiveButton(purposeButton);
+
+        PurposePage purpose =
+                new PurposePage();
+
+        Scene scene =
+                purpose.getPurposeScene(
+                        () -> showDashboard()
+                );
+
+        root.setCenter(
+                scene.getRoot()
+        );
+    }
+
+    // =========================================================
+    // PRIVACY SCAN
+    // =========================================================
+
+    private void showPrivacyScan() {
+
+        setActiveButton(privacyScanButton);
+
+        PrivacyScan privacyScan =
+                new PrivacyScan();
+
+        Scene scene =
+                privacyScan.getPrivacyScanScene(
+                        () -> showDashboard()
+                );
+
+        root.setCenter(
+                scene.getRoot()
+        );
+    }
+
+    // =========================================================
+    // PRIVACY RECEIPT
+    // =========================================================
+
+    private void showPrivacyReceipt() {
+
+        setActiveButton(privacyReceiptButton);
+
+        PrivacyReceipt privacyReceipt =
+                new PrivacyReceipt();
+
+        Scene scene =
+                privacyReceipt.getPrivacyReceiptScene(
+                        () -> showDashboard()
+                );
+
+        root.setCenter(
+                scene.getRoot()
+        );
+    }
+
+    // =========================================================
+    // QR SESSION
+    // =========================================================
+
+    private void showQRSession() {
+
+        setActiveButton(qrSessionButton);
+
+        QRSession qrSession =
+                new QRSession();
+
+        Scene scene =
+                qrSession.getQRSessionScene(
+                        () -> showDashboard()
+                );
+
+        root.setCenter(
+                scene.getRoot()
+        );
+    }
+
+    // =========================================================
+    // SMART REDACTION
+    // =========================================================
+
+    private void showSmartRedaction() {
+
+        setActiveButton(smartRedactionButton);
+
+        SmartRedaction smartRedaction =
+                new SmartRedaction();
+
+        Scene scene =
+                smartRedaction.getSmartRedactionScene(
+                        () -> showDashboard()
+                );
+
+        root.setCenter(
+                scene.getRoot()
         );
     }
 
@@ -852,9 +825,7 @@ public class UserDashboard {
                 new Insets(18)
         );
 
-        card.setPrefHeight(
-                105
-        );
+        card.setPrefHeight(105);
 
         card.setStyle(
                 "-fx-background-color: #091428;" +
@@ -898,9 +869,7 @@ public class UserDashboard {
         Label descriptionLabel =
                 new Label(description);
 
-        descriptionLabel.setWrapText(
-                true
-        );
+        descriptionLabel.setWrapText(true);
 
         descriptionLabel.setStyle(
                 "-fx-text-fill: #71829A;" +
@@ -919,9 +888,7 @@ public class UserDashboard {
                 new Insets(18)
         );
 
-        card.setPrefHeight(
-                125
-        );
+        card.setPrefHeight(125);
 
         card.setStyle(
                 "-fx-background-color: #091428;" +
@@ -960,9 +927,7 @@ public class UserDashboard {
     private VBox createSessionCard() {
 
         Label file =
-                new Label(
-                        "Aadhaar-Card.pdf"
-                );
+                new Label("Aadhaar-Card.pdf");
 
         file.setStyle(
                 "-fx-text-fill: white;" +
@@ -971,9 +936,7 @@ public class UserDashboard {
         );
 
         Label status =
-                new Label(
-                        "● Active"
-                );
+                new Label("● Active");
 
         status.setStyle(
                 "-fx-text-fill: #19D6A3;" +
@@ -1044,7 +1007,7 @@ public class UserDashboard {
                 "-fx-background-color: transparent;" +
                 "-fx-text-fill: #B8C5D6;" +
                 "-fx-font-size: 13px;" +
-                "-fx-padding: 11 15 11 15;"
+                "-fx-padding: 10 12 10 12;"
         );
 
         button.setOnMouseEntered(e -> {
@@ -1056,7 +1019,7 @@ public class UserDashboard {
                         "-fx-background-radius: 10;" +
                         "-fx-text-fill: #4CA8FF;" +
                         "-fx-font-size: 13px;" +
-                        "-fx-padding: 11 15 11 15;"
+                        "-fx-padding: 10 12 10 12;"
                 );
             }
         });
@@ -1069,7 +1032,7 @@ public class UserDashboard {
                         "-fx-background-color: transparent;" +
                         "-fx-text-fill: #B8C5D6;" +
                         "-fx-font-size: 13px;" +
-                        "-fx-padding: 11 15 11 15;"
+                        "-fx-padding: 10 12 10 12;"
                 );
             }
         });
@@ -1085,12 +1048,19 @@ public class UserDashboard {
             Button activeButton) {
 
         Button[] buttons = {
+
                 dashboardButton,
                 uploadButton,
                 documentsButton,
-                activityButton,
+                profileButton,
+
+                selectCentreButton,
+                requestStatusButton,
+                purposeButton,
+                privacyScanButton,
                 privacyReceiptButton,
-                profileButton
+                qrSessionButton,
+                smartRedactionButton
         };
 
         for (Button button : buttons) {
@@ -1099,7 +1069,7 @@ public class UserDashboard {
                     "-fx-background-color: transparent;" +
                     "-fx-text-fill: #B8C5D6;" +
                     "-fx-font-size: 13px;" +
-                    "-fx-padding: 11 15 11 15;"
+                    "-fx-padding: 10 12 10 12;"
             );
         }
 
@@ -1109,7 +1079,7 @@ public class UserDashboard {
                 "-fx-text-fill: white;" +
                 "-fx-font-size: 13px;" +
                 "-fx-font-weight: bold;" +
-                "-fx-padding: 11 15 11 15;"
+                "-fx-padding: 10 12 10 12;"
         );
     }
 }
