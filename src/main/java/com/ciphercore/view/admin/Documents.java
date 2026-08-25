@@ -4,7 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class Users {
+public class Documents {
 
     public VBox getContent() {
 
@@ -15,7 +15,7 @@ public class Users {
         );
 
         Label title = new Label(
-                "Users"
+                "Documents"
         );
 
         title.setStyle(
@@ -25,7 +25,7 @@ public class Users {
         );
 
         Label subtitle = new Label(
-                "Manage registered users and their access."
+                "Monitor documents processed through PRIVORA."
         );
 
         subtitle.setStyle(

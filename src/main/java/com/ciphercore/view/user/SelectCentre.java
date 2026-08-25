@@ -4,7 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class PrivacyScan {
+public class SelectCentre {
 
     public VBox getContent() {
 
@@ -20,7 +20,7 @@ public class PrivacyScan {
 
 
         Label title = new Label(
-                "Privacy Scan"
+                "Select Centre"
         );
 
         title.setStyle("""
@@ -31,7 +31,7 @@ public class PrivacyScan {
 
 
         Label subtitle = new Label(
-                "Scan your document for sensitive information."
+                "Choose a secure printing or service centre."
         );
 
         subtitle.setStyle("""

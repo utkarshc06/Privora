@@ -1,10 +1,10 @@
-package com.ciphercore.view.user;
+package com.ciphercore.view.xerox;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class PrivacyScan {
+public class ActiveSessions {
 
     public VBox getContent() {
 
@@ -20,7 +20,7 @@ public class PrivacyScan {
 
 
         Label title = new Label(
-                "Privacy Scan"
+                "Active Sessions"
         );
 
         title.setStyle("""
@@ -31,7 +31,7 @@ public class PrivacyScan {
 
 
         Label subtitle = new Label(
-                "Scan your document for sensitive information."
+                "Monitor currently active user sessions."
         );
 
         subtitle.setStyle("""

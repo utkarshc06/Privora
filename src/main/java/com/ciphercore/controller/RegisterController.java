@@ -8,10 +8,9 @@ import java.net.http.HttpResponse;
 import org.json.JSONObject;
 
 import com.ciphercore.dao.UserDAO;
-import com.ciphercore.model.Session;
 import com.ciphercore.model.User;
 
-public class LoginController {
+public class RegisterController {
 
     private final String API_KEY =
             "AIzaSyAtOlGblARQPdRvLruFCUqIl1cYZgaRUUs";
@@ -19,38 +18,44 @@ public class LoginController {
     private final UserDAO userDAO = new UserDAO();
 
     // =====================================================
-    // LOGIN
+    // REGISTER USER
     // =====================================================
 
-    public boolean login(
+    public boolean signUp(
+            String name,
             String email,
+            String mobile,
             String password,
-            String selectedRole) {
-
-        JSONObject payload = new JSONObject();
-
-        payload.put("email", email);
-        payload.put("password", password);
-        payload.put("returnSecureToken", true);
+            String role) {
 
         try {
 
             // -------------------------------------------------
-            // STEP 1: Firebase Authentication
+            // STEP 1: Create Firebase Authentication payload
+            // -------------------------------------------------
+
+            JSONObject authPayload = new JSONObject();
+
+            authPayload.put("email", email);
+            authPayload.put("password", password);
+            authPayload.put("returnSecureToken", true);
+
+            // -------------------------------------------------
+            // STEP 2: Create Firebase Authentication account
             // -------------------------------------------------
 
             HttpClient client =
                     HttpClient.newHttpClient();
 
-            URI uri =
+            URI authUri =
                     URI.create(
-                            "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key="
+                            "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key="
                                     + API_KEY
                     );
 
-            HttpRequest request =
+            HttpRequest authRequest =
                     HttpRequest.newBuilder()
-                            .uri(uri)
+                            .uri(authUri)
                             .header(
                                     "Content-Type",
                                     "application/json"
@@ -58,122 +63,96 @@ public class LoginController {
                             .POST(
                                     HttpRequest.BodyPublishers
                                             .ofString(
-                                                    payload.toString()
+                                                    authPayload.toString()
                                             )
                             )
                             .build();
 
-            HttpResponse<String> response =
+            HttpResponse<String> authResponse =
                     client.send(
-                            request,
+                            authRequest,
                             HttpResponse.BodyHandlers.ofString()
                     );
 
             System.out.println(
                     "Authentication status: "
-                            + response.statusCode()
+                            + authResponse.statusCode()
             );
 
             System.out.println(
                     "Authentication response: "
-                            + response.body()
+                            + authResponse.body()
             );
 
             // -------------------------------------------------
-            // STEP 2: Authentication failed
+            // STEP 3: Check authentication result
             // -------------------------------------------------
 
-            if (response.statusCode() != 200) {
+            if (authResponse.statusCode() != 200) {
 
                 System.out.println(
-                        "Invalid email or password."
+                        "Firebase Authentication registration failed."
                 );
 
                 return false;
             }
 
             // -------------------------------------------------
-            // STEP 3: Get Firebase UID
+            // STEP 4: Get Firebase UID
             // -------------------------------------------------
 
-            JSONObject result =
+            JSONObject authResult =
                     new JSONObject(
-                            response.body()
+                            authResponse.body()
                     );
 
             String uid =
-                    result.getString("localId");
+                    authResult.getString("localId");
 
             System.out.println(
-                    "Logged in UID: " + uid
+                    "Firebase UID: " + uid
             );
 
             // -------------------------------------------------
-            // STEP 4: Get user from Firestore
+            // STEP 5: Create User object
             // -------------------------------------------------
 
             User user =
-                    userDAO.getUserById(uid);
-
-            if (user == null) {
-
-                System.out.println(
-                        "User data not found in Firestore."
-                );
-
-                return false;
-            }
-
-            // -------------------------------------------------
-            // STEP 5: Check selected role
-            // -------------------------------------------------
-
-            if (!user.getRole().equalsIgnoreCase(selectedRole)) {
-
-                System.out.println(
-                        "Wrong role selected."
-                );
-
-                System.out.println(
-                        "Account role: "
-                                + user.getRole()
-                );
-
-                System.out.println(
-                        "Selected role: "
-                                + selectedRole
-                );
-
-                return false;
-            }
-
-            // -------------------------------------------------
-            // STEP 6: Create session
-            // -------------------------------------------------
-
-            Session session =
-                    new Session(
-                            user.getUserId(),
-                            user.getName(),
-                            user.getEmail(),
-                            user.getRole()
+                    new User(
+                            uid,
+                            name,
+                            email,
+                            mobile,
+                            null,
+                            role
                     );
 
-            System.out.println(
-                    "Login successful."
-            );
+            // -------------------------------------------------
+            // STEP 6: Save user information to Firestore
+            // -------------------------------------------------
+
+            boolean saved =
+                    userDAO.saveUser(user);
+
+            if (saved) {
+
+                System.out.println(
+                        "User data saved to Firestore."
+                );
+
+                System.out.println(
+                        "Registered Role: " + role
+                );
+
+                return true;
+            }
 
             System.out.println(
-                    "Logged in user: "
-                            + session.getName()
+                    "Authentication account created, "
+                            + "but Firestore data could not be saved."
             );
 
-            System.out.println(
-                    "Role: "
-                            + session.getRole()
-            );
-
-            return true;
+            return false;
 
         } catch (Exception e) {
 

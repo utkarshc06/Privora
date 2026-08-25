@@ -1,5 +1,11 @@
 package com.ciphercore.view.auth;
 
+import com.ciphercore.view.admin.AdminDashboard;
+import com.ciphercore.view.landing.HomePage;
+import com.ciphercore.view.user.UserDashboard;
+import com.ciphercore.view.xerox.XeroxDashboard;
+import com.ciphercore.controller.LoginController;
+
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,6 +15,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -16,35 +24,29 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
-import com.ciphercore.view.xerox.XeroxDashboard;
-import javafx.stage.Stage;
 
 public class LoginPage {
 
     private Scene loginScene;
 
+    // Selected role card
+    private VBox selectedCard;
 
-    // =========================================================
     // LOGIN SCENE
-    // =========================================================
 
     public Scene getLoginScene(Runnable rhp) {
 
+        LoginController loginController = new LoginController();
 
-        // =========================================================
         // MAIN ROOT
-        // =========================================================
 
         BorderPane root = new BorderPane();
 
         root.setStyle(
-                "-fx-background-color: linear-gradient(to bottom right, #020713, #06152D, #020713);"
+                "-fx-background-color: linear-gradient(to bottom right, #0B0A10, #171225, #0B0A10);"
         );
 
-
-        // =========================================================
         // TOP BAR
-        // =========================================================
 
         HBox topBar = new HBox();
 
@@ -56,26 +58,44 @@ public class LoginPage {
                 Pos.CENTER_LEFT
         );
 
-
-        // =========================================================
         // LOGO
-        // =========================================================
 
         Circle logoCircle = new Circle(20);
 
         logoCircle.setFill(
-                Color.web("#2196F3")
+                Color.web("#8B5CF6")
         );
 
+        // Shield Image
 
-        Label shield = new Label("♢");
-
-        shield.setStyle(
-                "-fx-text-fill: white;" +
-                "-fx-font-size: 24px;" +
-                "-fx-font-weight: bold;"
+        Image shieldImage = new Image(
+                "/assets/images/privimg.jpeg"
         );
 
+        ImageView shieldView = new ImageView(
+                shieldImage
+        );
+
+        shieldView.setFitWidth(28);
+        shieldView.setFitHeight(28);
+        shieldView.setPreserveRatio(true);
+
+        // Shield container
+
+        StackPane shieldBox = new StackPane(
+                shieldView
+        );
+
+        shieldBox.setPrefSize(
+                42,
+                42
+        );
+
+        shieldBox.setStyle(
+                "-fx-background-color: #7C3AED;" +
+                "-fx-background-radius: 50%;" +
+                "-fx-effect: dropshadow(gaussian, rgba(124,58,237,0.7), 15, 0.5, 0, 0);"
+        );
 
         StackPane logoBox = new StackPane();
 
@@ -84,16 +104,12 @@ public class LoginPage {
                 42
         );
 
-
         logoBox.getChildren().addAll(
                 logoCircle,
-                shield
+                shieldBox
         );
 
-
-        // =========================================================
         // BRAND
-        // =========================================================
 
         Label brandName = new Label(
                 "PRIVORA"
@@ -105,24 +121,21 @@ public class LoginPage {
                 "-fx-font-weight: bold;"
         );
 
-
         Label brandTagline = new Label(
                 "PRIVACY CONTROLLED"
         );
 
         brandTagline.setStyle(
-                "-fx-text-fill: #7D8BA3;" +
+                "-fx-text-fill: #9B91B5;" +
                 "-fx-font-size: 9px;" +
                 "-fx-letter-spacing: 1px;"
         );
-
 
         VBox brandText = new VBox(
                 0,
                 brandName,
                 brandTagline
         );
-
 
         HBox brand = new HBox(
                 10,
@@ -134,15 +147,11 @@ public class LoginPage {
                 Pos.CENTER_LEFT
         );
 
-
-        // =========================================================
         // CREATE ACCOUNT
-        // =========================================================
 
         Button createAccount = createSimpleButton(
                 "Create account"
         );
-
 
         createAccount.setOnAction(e -> {
 
@@ -150,32 +159,34 @@ public class LoginPage {
                     "Create account clicked"
             );
 
-            if (rhp != null) {
-                rhp.run();
-            }
+            Runnable rlp = new Runnable() {
+
+                public void run() {
+                    backtologin();
+                }
+            };
+
+            RegisterPage obj1 = new RegisterPage();
+
+            HomePage.homeStage.setScene(
+                    obj1.getRegisterScene(rlp)
+            );
 
         });
 
-
-        // =========================================================
         // PUSH CREATE ACCOUNT TO RIGHT
-        // =========================================================
 
         HBox.setHgrow(
                 brand,
                 javafx.scene.layout.Priority.ALWAYS
         );
 
-
         topBar.getChildren().addAll(
                 brand,
                 createAccount
         );
 
-
-        // =========================================================
         // LOGIN CARD
-        // =========================================================
 
         VBox loginCard = new VBox();
 
@@ -191,18 +202,15 @@ public class LoginPage {
                 450
         );
 
-
         loginCard.setStyle(
-                "-fx-background-color: rgba(9,20,40,0.88);" +
+                "-fx-background-color: rgba(22,17,34,0.94);" +
                 "-fx-background-radius: 22;" +
-                "-fx-border-color: #1C304A;" +
-                "-fx-border-radius: 22;"
+                "-fx-border-color: #33254D;" +
+                "-fx-border-radius: 22;" +
+                "-fx-effect: dropshadow(gaussian, rgba(124,58,237,0.15), 30, 0.3, 0, 8);"
         );
 
-
-        // =========================================================
         // WELCOME TEXT
-        // =========================================================
 
         Label welcome = new Label(
                 "Welcome back"
@@ -214,16 +222,14 @@ public class LoginPage {
                 "-fx-font-weight: bold;"
         );
 
-
         Label subtitle = new Label(
                 "Sign in to continue to PRIVORA"
         );
 
         subtitle.setStyle(
-                "-fx-text-fill: #8C9BB0;" +
+                "-fx-text-fill: #A49AB8;" +
                 "-fx-font-size: 13px;"
         );
-
 
         VBox headingBox = new VBox(
                 5,
@@ -235,7 +241,6 @@ public class LoginPage {
                 Pos.CENTER
         );
 
-
         // =========================================================
         // USER / XEROX / ADMIN
         // =========================================================
@@ -246,20 +251,17 @@ public class LoginPage {
                 "Upload & share\ndocuments"
         );
 
-
         VBox xeroxCard = createRoleCard(
                 "▥",
                 "Xerox Centre",
                 "Handle print requests"
         );
 
-
         VBox adminCard = createRoleCard(
                 "♢",
                 "Admin",
                 "Manage the platform"
         );
-
 
         HBox roleBox = new HBox(
                 10,
@@ -268,11 +270,9 @@ public class LoginPage {
                 adminCard
         );
 
-
         roleBox.setAlignment(
                 Pos.CENTER
         );
-
 
         // =========================================================
         // DEFAULT ROLE
@@ -282,17 +282,13 @@ public class LoginPage {
                 "User"
         };
 
-
-        // =========================================================
         // DEFAULT SELECTED CARD
-        // =========================================================
 
         selectRoleCard(
                 userCard,
                 xeroxCard,
                 adminCard
         );
-
 
         // =========================================================
         // SIGN IN BUTTON
@@ -302,7 +298,6 @@ public class LoginPage {
                 "Sign in as User"
         );
 
-
         // =========================================================
         // USER CARD CLICK
         // =========================================================
@@ -311,12 +306,10 @@ public class LoginPage {
 
             selectedRole[0] = "User";
 
-
             System.out.println(
                     "Selected Role: " +
                     selectedRole[0]
             );
-
 
             selectRoleCard(
                     userCard,
@@ -324,13 +317,11 @@ public class LoginPage {
                     adminCard
             );
 
-
             signInButton.setText(
                     "Sign in as User"
             );
 
         });
-
 
         // =========================================================
         // XEROX CARD CLICK
@@ -340,12 +331,10 @@ public class LoginPage {
 
             selectedRole[0] = "Xerox";
 
-
             System.out.println(
                     "Selected Role: " +
                     selectedRole[0]
             );
-
 
             selectRoleCard(
                     xeroxCard,
@@ -353,13 +342,11 @@ public class LoginPage {
                     adminCard
             );
 
-
             signInButton.setText(
                     "Sign in as Xerox"
             );
 
         });
-
 
         // =========================================================
         // ADMIN CARD CLICK
@@ -369,12 +356,10 @@ public class LoginPage {
 
             selectedRole[0] = "Admin";
 
-
             System.out.println(
                     "Selected Role: " +
                     selectedRole[0]
             );
-
 
             selectRoleCard(
                     adminCard,
@@ -382,13 +367,11 @@ public class LoginPage {
                     xeroxCard
             );
 
-
             signInButton.setText(
                     "Sign in as Admin"
             );
 
         });
-
 
         // =========================================================
         // EMAIL
@@ -404,24 +387,21 @@ public class LoginPage {
                 "-fx-font-weight: bold;"
         );
 
-
         TextField emailField = new TextField();
 
         emailField.setPromptText(
-                "demo@privora.app"
+                "superx@privora.app"
         );
-
 
         emailField.setStyle(
-                "-fx-background-color: #071226;" +
+                "-fx-background-color: #15111F;" +
                 "-fx-background-radius: 20;" +
-                "-fx-border-color: #24354E;" +
+                "-fx-border-color: #3A2C50;" +
                 "-fx-border-radius: 20;" +
                 "-fx-text-fill: white;" +
-                "-fx-prompt-text-fill: #66758A;" +
+                "-fx-prompt-text-fill: #746A85;" +
                 "-fx-padding: 10 15 10 15;"
         );
-
 
         // =========================================================
         // PASSWORD
@@ -437,149 +417,235 @@ public class LoginPage {
                 "-fx-font-weight: bold;"
         );
 
+        PasswordField passwordField = new PasswordField();
 
-        PasswordField passwordField =
-                new PasswordField();
+        Label loginMessage = new Label();
 
+        loginMessage.setStyle(
+        "-fx-text-fill: #FF6B6B;" +
+        "-fx-font-size: 12px;");
 
         passwordField.setPromptText(
                 "••••••••"
         );
 
-
         passwordField.setStyle(
-                "-fx-background-color: #071226;" +
+                "-fx-background-color: #15111F;" +
                 "-fx-background-radius: 20;" +
-                "-fx-border-color: #24354E;" +
+                "-fx-border-color: #3A2C50;" +
                 "-fx-border-radius: 20;" +
                 "-fx-text-fill: white;" +
-                "-fx-prompt-text-fill: #66758A;" +
+                "-fx-prompt-text-fill: #746A85;" +
                 "-fx-padding: 10 15 10 15;"
         );
-
 
         // =========================================================
         // SIGN IN BUTTON ACTION
         // =========================================================
-signInButton.setOnAction(e -> {
 
-    System.out.println("SIGN IN BUTTON CLICKED");
+       signInButton.setOnAction(e -> {
 
-    System.out.println(
-            "Selected Role: " + selectedRole[0]
-    );
+    String email =
+            emailField.getText().trim();
 
-    if (selectedRole[0].equals("Xerox")) {
+    String password =
+            passwordField.getText();
 
-        System.out.println(
-                "Opening Xerox Dashboard..."
+    String role =
+            selectedRole[0];
+
+    // =====================================================
+    // VALIDATION
+    // =====================================================
+
+    if (email.isEmpty()) {
+
+        loginMessage.setText(
+                "Please enter your email."
         );
 
-        XeroxDashboard dashboard =
-                new XeroxDashboard();
-
-        Stage stage =
-                (Stage) signInButton
-                        .getScene()
-                        .getWindow();
-
-        stage.setScene(
-                dashboard.getScene()
-        );
-
-        stage.show();
-
-    } else if (selectedRole[0].equals("User")) {
-
-        System.out.println(
-                "User login selected"
-        );
-
-    } else if (selectedRole[0].equals("Admin")) {
-
-        System.out.println(
-                "Admin login selected"
-        );
+        return;
     }
-});
 
+    if (password.isEmpty()) {
 
-// sing in action
-
-   signInButton.setOnAction(e -> {
-
-    System.out.println("SIGN IN BUTTON CLICKED");
-
-    System.out.println(
-            "Selected Role: " + selectedRole[0]
-    );
-
-    if (selectedRole[0].equals("Xerox")) {
-
-        System.out.println(
-                "Opening Xerox Dashboard..."
+        loginMessage.setText(
+                "Please enter your password."
         );
 
-        XeroxDashboard dashboard =
-                new XeroxDashboard();
-
-        Stage stage =
-                (Stage) signInButton
-                        .getScene()
-                        .getWindow();
-
-        stage.setScene(
-                dashboard.getScene()
-        );
-
-        stage.show();
-
-    } else if (selectedRole[0].equals("User")) {
-
-        System.out.println(
-                "User login selected"
-        );
-
-    } else if (selectedRole[0].equals("Admin")) {
-
-        System.out.println(
-                "Admin login selected"
-        );
+        return;
     }
-});
 
+    // =====================================================
+    // FIREBASE LOGIN
+    // =====================================================
 
-        // =========================================================
-        // CREATE ACCOUNT TEXT
-        // =========================================================
+    boolean loginSuccess =
+            loginController.login(      
+                    email,
+                    password,
+                    role
+            );
 
-        Label newHere = new Label(
-                "New here? Create an account"
-        );
+    // =====================================================
+    // LOGIN SUCCESS
+    // =====================================================
 
+    if (loginSuccess) {
 
-        newHere.setStyle(
-                "-fx-text-fill: #8C9BB0;" +
+        loginMessage.setStyle(
+                "-fx-text-fill: #4ADE80;" +
                 "-fx-font-size: 12px;"
         );
 
+        loginMessage.setText(
+                "Login successful!"
+        );
+
+        System.out.println(
+                "Login successful"
+        );
+
+        System.out.println(
+                "Role: " + role
+        );
+
+        // =================================================
+        // USER
+        // =================================================
+
+        if (role.equals("User")) {
+
+            Runnable rd = new Runnable() {
+
+                @Override
+                public void run() {
+                    backtologin();
+                }
+            };
+
+            UserDashboard userDashboard =
+                    new UserDashboard();
+
+            HomePage.homeStage.setScene(
+                    userDashboard.getUserDashboardScene(rd)
+            );
+        }
+
+        // =================================================
+        // XEROX
+        // =================================================
+
+        else if (role.equals("Xerox")) {
+
+            Runnable rd = new Runnable() {
+
+                @Override
+                public void run() {
+                    backtologin();
+                }
+            };
+
+            XeroxDashboard xeroxDashboard =
+                    new XeroxDashboard();
+
+            HomePage.homeStage.setScene(
+                    xeroxDashboard.getXeroxDashboardScene(rd)
+            );
+        }
+
+        // =================================================
+        // ADMIN
+        // =================================================
+
+        else if (role.equals("Admin")) {
+
+            Runnable rd = new Runnable() {
+
+                @Override
+                public void run() {
+                    backtologin();
+                }
+            };
+
+            AdminDashboard adminDashboard =
+                    new AdminDashboard();
+
+            HomePage.homeStage.setScene(
+                    adminDashboard.getAdminDashboardScene(rd)
+            );
+        }
+
+    }
+
+    // =====================================================
+    // LOGIN FAILED
+    // =====================================================
+
+    else {
+
+        loginMessage.setStyle(
+                "-fx-text-fill: #FF6B6B;" +
+                "-fx-font-size: 12px;"
+        );
+
+        loginMessage.setText(
+                "Invalid email or password."
+        );
+
+        System.out.println(
+                "Login failed"
+        );
+    }
+});
+
+        // =========================================================
+        // CREATE ACCOUNT LINK
+        // =========================================================
+
+        Button createLinkButton = createLinkButton(
+                "New here? Create an account"
+        );
+
+        createLinkButton.setOnAction(e -> {
+
+            System.out.println(
+                    "Create account link clicked"
+            );
+
+            Runnable rlp = new Runnable() {
+
+                @Override
+                public void run() {
+                    backtologin();
+                }
+
+            };
+
+            RegisterPage registerPage =
+                    new RegisterPage();
+
+            HomePage.homeStage.setScene(
+                    registerPage.getRegisterScene(rlp)
+            );
+
+        });
 
         // =========================================================
         // ADD EVERYTHING TO LOGIN CARD
         // =========================================================
 
-        loginCard.getChildren().addAll(
+       loginCard.getChildren().addAll(
                 headingBox,
                 roleBox,
                 emailLabel,
                 emailField,
                 passwordLabel,
                 passwordField,
+                loginMessage,
                 signInButton,
-                newHere
-        );
-
-
+                createLinkButton
+);
         // =========================================================
         // CENTER LOGIN CARD
         // =========================================================
@@ -588,11 +654,9 @@ signInButton.setOnAction(e -> {
                 loginCard
         );
 
-
         centerBox.setPadding(
                 new Insets(40)
         );
-
 
         // =========================================================
         // SCROLL PANE
@@ -603,32 +667,26 @@ signInButton.setOnAction(e -> {
                         centerBox
                 );
 
-
         scrollPane.setFitToWidth(
                 true
         );
-
 
         scrollPane.setFitToHeight(
                 true
         );
 
-
         scrollPane.setHbarPolicy(
                 ScrollPane.ScrollBarPolicy.NEVER
         );
-
 
         scrollPane.setVbarPolicy(
                 ScrollPane.ScrollBarPolicy.AS_NEEDED
         );
 
-
         scrollPane.setStyle(
                 "-fx-background-color: transparent;" +
                 "-fx-background: transparent;"
         );
-
 
         // =========================================================
         // ROOT
@@ -638,11 +696,9 @@ signInButton.setOnAction(e -> {
                 topBar
         );
 
-
         root.setCenter(
                 scrollPane
         );
-
 
         // =========================================================
         // SCENE
@@ -654,10 +710,8 @@ signInButton.setOnAction(e -> {
                 700
         );
 
-
         return loginScene;
     }
-
 
     // =============================================================
     // ROLE CARD
@@ -668,24 +722,20 @@ signInButton.setOnAction(e -> {
             String title,
             String description) {
 
-
         Label iconLabel = new Label(
                 icon
         );
 
-
         iconLabel.setStyle(
-                "-fx-background-color: #14243D;" +
+                "-fx-background-color: #251A38;" +
                 "-fx-background-radius: 50%;" +
-                "-fx-text-fill: #A8B8CC;" +
+                "-fx-text-fill: #B99AEF;" +
                 "-fx-padding: 8;"
         );
-
 
         Label titleLabel = new Label(
                 title
         );
-
 
         titleLabel.setStyle(
                 "-fx-text-fill: white;" +
@@ -693,18 +743,15 @@ signInButton.setOnAction(e -> {
                 "-fx-font-weight: bold;"
         );
 
-
         Label descriptionLabel =
                 new Label(
                         description
                 );
 
-
         descriptionLabel.setStyle(
-                "-fx-text-fill: #7E8DA3;" +
+                "-fx-text-fill: #91869F;" +
                 "-fx-font-size: 10px;"
         );
-
 
         VBox card = new VBox(
                 8,
@@ -713,33 +760,28 @@ signInButton.setOnAction(e -> {
                 descriptionLabel
         );
 
-
         card.setPadding(
                 new Insets(12)
         );
-
 
         card.setPrefWidth(
                 125
         );
 
-
         card.setPrefHeight(
                 105
         );
-
 
         // =========================================================
         // DEFAULT STYLE
         // =========================================================
 
         card.setStyle(
-                "-fx-background-color: #0B162A;" +
+                "-fx-background-color: #17131F;" +
                 "-fx-background-radius: 18;" +
-                "-fx-border-color: #22334C;" +
+                "-fx-border-color: #352846;" +
                 "-fx-border-radius: 18;"
         );
-
 
         // =========================================================
         // HOVER ANIMATION
@@ -751,16 +793,13 @@ signInButton.setOnAction(e -> {
                         card
                 );
 
-
         scaleUp.setToX(
                 1.04
         );
 
-
         scaleUp.setToY(
                 1.04
         );
-
 
         ScaleTransition scaleDown =
                 new ScaleTransition(
@@ -768,16 +807,13 @@ signInButton.setOnAction(e -> {
                         card
                 );
 
-
         scaleDown.setToX(
                 1.0
         );
 
-
         scaleDown.setToY(
                 1.0
         );
-
 
         // =========================================================
         // CURSOR ENTER
@@ -785,21 +821,23 @@ signInButton.setOnAction(e -> {
 
         card.setOnMouseEntered(e -> {
 
+            if (card == selectedCard) {
+                return;
+            }
+
             scaleDown.stop();
 
             scaleUp.playFromStart();
 
-
             card.setStyle(
-                    "-fx-background-color: #0E1D33;" +
+                    "-fx-background-color: #241A32;" +
                     "-fx-background-radius: 18;" +
-                    "-fx-border-color: #2196F3;" +
+                    "-fx-border-color: #8B5CF6;" +
                     "-fx-border-radius: 18;" +
-                    "-fx-effect: dropshadow(gaussian, rgba(33,150,243,0.7), 20, 0.5, 0, 5);"
+                    "-fx-effect: dropshadow(gaussian, rgba(139,92,246,0.7), 20, 0.5, 0, 5);"
             );
 
         });
-
 
         // =========================================================
         // CURSOR EXIT
@@ -807,106 +845,97 @@ signInButton.setOnAction(e -> {
 
         card.setOnMouseExited(e -> {
 
+            if (card == selectedCard) {
+                return;
+            }
+
             scaleUp.stop();
 
             scaleDown.playFromStart();
 
-
             card.setStyle(
-                    "-fx-background-color: #0B162A;" +
+                    "-fx-background-color: #17131F;" +
                     "-fx-background-radius: 18;" +
-                    "-fx-border-color: #22334C;" +
+                    "-fx-border-color: #352846;" +
                     "-fx-border-radius: 18;"
             );
 
         });
 
-
         return card;
     }
 
-
-    // =============================================================
     // SELECT ROLE CARD
-    // =============================================================
 
     private void selectRoleCard(
             VBox selected,
             VBox other1,
             VBox other2) {
 
+        selectedCard = selected;
 
-        // =========================================================
-        // SELECTED CARD
-        // =========================================================
+        selected.setScaleX(1.0);
+        selected.setScaleY(1.0);
+
+        other1.setScaleX(1.0);
+        other1.setScaleY(1.0);
+
+        other2.setScaleX(1.0);
+        other2.setScaleY(1.0);
+
+        // SELECTED
 
         selected.setStyle(
-                "-fx-background-color: #0E1D33;" +
+                "-fx-background-color: #241A32;" +
                 "-fx-background-radius: 18;" +
-                "-fx-border-color: #2196F3;" +
+                "-fx-border-color: #8B5CF6;" +
                 "-fx-border-radius: 18;" +
-                "-fx-effect: dropshadow(gaussian, rgba(33,150,243,0.8), 25, 0.6, 0, 5);"
+                "-fx-effect: dropshadow(gaussian, rgba(139,92,246,0.8), 25, 0.6, 0, 5);"
         );
 
-
-        // =========================================================
-        // OTHER CARD 1
-        // =========================================================
+        // OTHER 1
 
         other1.setStyle(
-                "-fx-background-color: #0B162A;" +
+                "-fx-background-color: #17131F;" +
                 "-fx-background-radius: 18;" +
-                "-fx-border-color: #22334C;" +
+                "-fx-border-color: #352846;" +
                 "-fx-border-radius: 18;"
         );
 
-
-        // =========================================================
-        // OTHER CARD 2
-        // =========================================================
+        // OTHER 2
 
         other2.setStyle(
-                "-fx-background-color: #0B162A;" +
+                "-fx-background-color: #17131F;" +
                 "-fx-background-radius: 18;" +
-                "-fx-border-color: #22334C;" +
+                "-fx-border-color: #352846;" +
                 "-fx-border-radius: 18;"
         );
-
     }
 
-
-    // =============================================================
-    // BLUE BUTTON
-    // =============================================================
+    // PURPLE BUTTON
 
     private Button createBlueButton(
             String text) {
-
 
         Button button = new Button(
                 text
         );
 
-
         button.setMaxWidth(
                 Double.MAX_VALUE
         );
 
-
         button.setStyle(
-                "-fx-background-color: linear-gradient(to right, #2188FF, #19B5F1);" +
+                "-fx-background-color: linear-gradient(to right, #7C3AED, #A855F7);" +
                 "-fx-background-radius: 20;" +
                 "-fx-text-fill: white;" +
                 "-fx-font-size: 13px;" +
                 "-fx-font-weight: bold;" +
                 "-fx-padding: 11 20 11 20;" +
-                "-fx-effect: dropshadow(gaussian, rgba(33,136,255,0.5), 20, 0.5, 0, 4);"
+                "-fx-effect: dropshadow(gaussian, rgba(139,92,246,0.5), 20, 0.5, 0, 4);"
         );
 
-
-        // =========================================================
         // BUTTON HOVER ANIMATION
-        // =========================================================
 
         ScaleTransition scaleUp =
                 new ScaleTransition(
@@ -914,16 +943,13 @@ signInButton.setOnAction(e -> {
                         button
                 );
 
-
         scaleUp.setToX(
                 1.04
         );
 
-
         scaleUp.setToY(
                 1.04
         );
-
 
         ScaleTransition scaleDown =
                 new ScaleTransition(
@@ -931,20 +957,15 @@ signInButton.setOnAction(e -> {
                         button
                 );
 
-
         scaleDown.setToX(
                 1.0
         );
-
 
         scaleDown.setToY(
                 1.0
         );
 
-
-        // =========================================================
         // MOUSE ENTER
-        // =========================================================
 
         button.setOnMouseEntered(e -> {
 
@@ -954,10 +975,7 @@ signInButton.setOnAction(e -> {
 
         });
 
-
-        // =========================================================
         // MOUSE EXIT
-        // =========================================================
 
         button.setOnMouseExited(e -> {
 
@@ -967,67 +985,109 @@ signInButton.setOnAction(e -> {
 
         });
 
-
         return button;
     }
 
-
-    // =============================================================
     // SIMPLE BUTTON
-    // =============================================================
 
     private Button createSimpleButton(
             String text) {
-
 
         Button button = new Button(
                 text
         );
 
-
         button.setStyle(
                 "-fx-background-color: transparent;" +
-                "-fx-text-fill: white;" +
+                "-fx-text-fill: #F1ECF8;" +
                 "-fx-font-size: 12px;" +
                 "-fx-padding: 8 15 8 15;"
         );
 
-
-        // =========================================================
         // MOUSE ENTER
-        // =========================================================
 
         button.setOnMouseEntered(e -> {
 
             button.setStyle(
-                    "-fx-background-color: rgba(33,136,255,0.18);" +
+                    "-fx-background-color: rgba(139,92,246,0.18);" +
                     "-fx-background-radius: 15;" +
-                    "-fx-text-fill: #4CA8FF;" +
+                    "-fx-text-fill: #B78CFF;" +
                     "-fx-font-size: 12px;" +
                     "-fx-padding: 8 15 8 15;" +
-                    "-fx-effect: dropshadow(gaussian, rgba(33,136,255,0.5), 15, 0.4, 0, 0);"
+                    "-fx-effect: dropshadow(gaussian, rgba(139,92,246,0.5), 15, 0.4, 0, 0);"
             );
 
         });
 
-
-        // =========================================================
         // MOUSE EXIT
-        // =========================================================
 
         button.setOnMouseExited(e -> {
 
             button.setStyle(
                     "-fx-background-color: transparent;" +
-                    "-fx-text-fill: white;" +
+                    "-fx-text-fill: #F1ECF8;" +
                     "-fx-font-size: 12px;" +
                     "-fx-padding: 8 15 8 15;"
             );
 
         });
 
+        return button;
+    }
+
+    // CREATE LINK BUTTON
+
+    private Button createLinkButton(
+            String text) {
+
+        Button button = new Button(
+                text
+        );
+
+        button.setStyle(
+                "-fx-background-color: transparent;" +
+                "-fx-text-fill: #9D91AD;" +
+                "-fx-font-size: 12px;" +
+                "-fx-padding: 5 10 5 10;" +
+                "-fx-cursor: hand;"
+        );
+
+        button.setOnMouseEntered(e -> {
+
+            button.setStyle(
+                    "-fx-background-color: transparent;" +
+                    "-fx-text-fill: #B78CFF;" +
+                    "-fx-font-size: 12px;" +
+                    "-fx-font-weight: bold;" +
+                    "-fx-padding: 5 10 5 10;" +
+                    "-fx-cursor: hand;"
+            );
+
+        });
+
+        button.setOnMouseExited(e -> {
+
+            button.setStyle(
+                    "-fx-background-color: transparent;" +
+                    "-fx-text-fill: #9D91AD;" +
+                    "-fx-font-size: 12px;" +
+                    "-fx-padding: 5 10 5 10;" +
+                    "-fx-cursor: hand;"
+            );
+
+        });
 
         return button;
+    }
+
+    // BACK TO LOGIN
+
+    public void backtologin() {
+
+        HomePage.homeStage.setScene(
+                loginScene
+        );
+
     }
 
 }

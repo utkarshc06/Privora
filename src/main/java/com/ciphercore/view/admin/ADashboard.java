@@ -1,10 +1,11 @@
+
 package com.ciphercore.view.admin;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class Users {
+public class ADashboard {
 
     public VBox getContent() {
 
@@ -15,7 +16,7 @@ public class Users {
         );
 
         Label title = new Label(
-                "Users"
+                "Admin Dashboard"
         );
 
         title.setStyle(
@@ -25,7 +26,7 @@ public class Users {
         );
 
         Label subtitle = new Label(
-                "Manage registered users and their access."
+                "Monitor and manage the PRIVORA platform."
         );
 
         subtitle.setStyle(
