@@ -8,18 +8,32 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
 public class AdminDashboard {
 
+    // =========================================================
+    // SCENE
+    // =========================================================
+
     private Scene adminDashboardScene;
+
+    // =========================================================
+    // CONTENT AREA
+    // =========================================================
 
     private VBox contentArea;
 
-    private VBox menuBox;
+    // =========================================================
+    // SELECTED MENU ITEM
+    // =========================================================
 
     private HBox selectedMenuItem;
 
@@ -31,7 +45,7 @@ public class AdminDashboard {
     public Scene getAdminDashboardScene(Runnable ral) {
 
         // =====================================================
-        // MAIN ROOT
+        // ROOT
         // =====================================================
 
         BorderPane root = new BorderPane();
@@ -58,12 +72,14 @@ public class AdminDashboard {
 
 
         // =====================================================
-        // LOGO
+        // LOGO SECTION
         // =====================================================
 
         HBox logoSection = new HBox(12);
 
-        logoSection.setAlignment(Pos.CENTER_LEFT);
+        logoSection.setAlignment(
+                Pos.CENTER_LEFT
+        );
 
         logoSection.setPadding(
                 new Insets(20, 18, 20, 18)
@@ -74,7 +90,8 @@ public class AdminDashboard {
         // PRIVORA LOGO
         // =====================================================
 
-        Circle logoCircle = new Circle(20);
+        Circle logoCircle =
+                new Circle(20);
 
         logoCircle.setFill(
                 Color.web("#7C3AED")
@@ -82,7 +99,14 @@ public class AdminDashboard {
 
 
         Image shieldImage =
-                new Image("/assets/images/privimg.jpeg");
+                new Image(
+                        getClass()
+                                .getResource(
+                                        "/assets/images/privimg.jpeg"
+                                )
+                                .toExternalForm()
+                );
+
 
         ImageView shieldView =
                 new ImageView(shieldImage);
@@ -93,9 +117,19 @@ public class AdminDashboard {
 
 
         StackPane shieldBox =
-                new StackPane(shieldView);
+                new StackPane(
+                        shieldView
+                );
 
-        shieldBox.setPrefSize(42, 42);
+        shieldBox.setPrefSize(
+                42,
+                42
+        );
+
+        shieldBox.setMaxSize(
+                42,
+                42
+        );
 
         shieldBox.setStyle(
                 "-fx-background-color: #6D28D9;" +
@@ -109,7 +143,15 @@ public class AdminDashboard {
         StackPane logoBox =
                 new StackPane();
 
-        logoBox.setPrefSize(42, 42);
+        logoBox.setPrefSize(
+                42,
+                42
+        );
+
+        logoBox.setMaxSize(
+                42,
+                42
+        );
 
         logoBox.getChildren().addAll(
                 logoCircle,
@@ -154,7 +196,7 @@ public class AdminDashboard {
 
 
         logoSection.getChildren().addAll(
-                shieldBox,
+                logoBox,
                 titleBox
         );
 
@@ -178,16 +220,20 @@ public class AdminDashboard {
 
 
         // =====================================================
-        // MENU
+        // MENU BOX
         // =====================================================
 
-        menuBox =
+        VBox menuBox =
                 new VBox(5);
 
         menuBox.setPadding(
                 new Insets(5, 10, 10, 10)
         );
 
+
+        // =====================================================
+        // MENU ITEMS
+        // =====================================================
 
         String[][] menuItems = {
 
@@ -214,8 +260,6 @@ public class AdminDashboard {
                     );
 
 
-            // Dashboard selected by default
-
             if (i == 0) {
 
                 setSelected(item);
@@ -223,7 +267,9 @@ public class AdminDashboard {
             }
 
 
-            menuBox.getChildren().add(item);
+            menuBox.getChildren().add(
+                    item
+            );
         }
 
 
@@ -232,9 +278,13 @@ public class AdminDashboard {
         // =====================================================
 
         ScrollPane menuScroll =
-                new ScrollPane(menuBox);
+                new ScrollPane(
+                        menuBox
+                );
 
-        menuScroll.setFitToWidth(true);
+        menuScroll.setFitToWidth(
+                true
+        );
 
         menuScroll.setHbarPolicy(
                 ScrollPane.ScrollBarPolicy.NEVER
@@ -246,7 +296,8 @@ public class AdminDashboard {
 
         menuScroll.setStyle(
                 "-fx-background-color: #121019;" +
-                "-fx-background: #121019;"
+                "-fx-background: #121019;" +
+                "-fx-border-color: transparent;"
         );
 
 
@@ -303,6 +354,10 @@ public class AdminDashboard {
         );
 
 
+        // =====================================================
+        // LOGOUT HOVER
+        // =====================================================
+
         logoutSection.setOnMouseEntered(e -> {
 
             logoutText.setStyle(
@@ -310,6 +365,7 @@ public class AdminDashboard {
                     "-fx-font-size: 14px;" +
                     "-fx-font-weight: bold;"
             );
+
 
             ScaleTransition scale =
                     new ScaleTransition(
@@ -332,6 +388,7 @@ public class AdminDashboard {
                     "-fx-font-weight: bold;"
             );
 
+
             ScaleTransition scale =
                     new ScaleTransition(
                             Duration.millis(120),
@@ -345,17 +402,23 @@ public class AdminDashboard {
         });
 
 
+        // =====================================================
+        // LOGOUT ACTION
+        // =====================================================
+
         logoutSection.setOnMouseClicked(e -> {
 
             if (ral != null) {
+
                 ral.run();
+
             }
 
         });
 
 
         // =====================================================
-        // ADD SIDEBAR
+        // SIDEBAR
         // =====================================================
 
         sidebar.getChildren().addAll(
@@ -373,20 +436,17 @@ public class AdminDashboard {
         contentArea =
                 new VBox();
 
-        contentArea.setPadding(
-                new Insets(40)
-        );
-
         contentArea.setStyle(
                 "-fx-background-color: #0B0910;"
         );
 
 
-        VBox dashboardContent =
-                new ADashboard().getContent();
+        // =====================================================
+        // DEFAULT DASHBOARD
+        // =====================================================
 
         contentArea.getChildren().add(
-                dashboardContent
+                new ADashboard().getContent()
         );
 
 
@@ -394,9 +454,13 @@ public class AdminDashboard {
         // ROOT
         // =====================================================
 
-        root.setLeft(sidebar);
+        root.setLeft(
+                sidebar
+        );
 
-        root.setCenter(contentArea);
+        root.setCenter(
+                contentArea
+        );
 
 
         // =====================================================
@@ -439,7 +503,6 @@ public class AdminDashboard {
                 Double.MAX_VALUE
         );
 
-
         item.setStyle(
                 "-fx-background-color: transparent;" +
                 "-fx-background-radius: 18;" +
@@ -447,16 +510,26 @@ public class AdminDashboard {
         );
 
 
+        // =====================================================
+        // ICON
+        // =====================================================
+
         Label iconLabel =
                 new Label(icon);
 
-        iconLabel.setPrefWidth(22);
+        iconLabel.setPrefWidth(
+                22
+        );
 
         iconLabel.setStyle(
                 "-fx-text-fill: #9B93AA;" +
                 "-fx-font-size: 17px;"
         );
 
+
+        // =====================================================
+        // TEXT
+        // =====================================================
 
         Label textLabel =
                 new Label(text);
@@ -490,7 +563,6 @@ public class AdminDashboard {
                         "gaussian, rgba(124,58,237,0.20)," +
                         "12, 0.3, 0, 2);"
                 );
-
             }
 
 
@@ -527,8 +599,8 @@ public class AdminDashboard {
                             item
                     );
 
-            scale.setToX(1.0);
-            scale.setToY(1.0);
+            scale.setToX(1);
+            scale.setToY(1);
 
             scale.play();
 
@@ -564,7 +636,7 @@ public class AdminDashboard {
 
 
     // =========================================================
-    // CHANGE RIGHT SIDE
+    // CHANGE PAGE
     // =========================================================
 
     private void changePage(
@@ -575,7 +647,6 @@ public class AdminDashboard {
 
 
         switch (pageName) {
-
 
             case "Dashboard":
 
@@ -663,7 +734,6 @@ public class AdminDashboard {
 
 
         item.setScaleX(1);
-
         item.setScaleY(1);
 
 
@@ -680,6 +750,7 @@ public class AdminDashboard {
 
         Label icon =
                 (Label) item.getChildren().get(0);
+
 
         Label text =
                 (Label) item.getChildren().get(1);
@@ -716,6 +787,7 @@ public class AdminDashboard {
 
         Label icon =
                 (Label) item.getChildren().get(0);
+
 
         Label text =
                 (Label) item.getChildren().get(1);

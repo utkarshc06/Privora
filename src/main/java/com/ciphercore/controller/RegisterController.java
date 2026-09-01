@@ -13,7 +13,7 @@ import com.ciphercore.model.User;
 public class RegisterController {
 
     private final String API_KEY =
-            "AIzaSyAtOlGblARQPdRvLruFCUqIl1cYZgaRUUs";
+            "AIzaSyDtZdSWFusLsvWsKgST2qveoWUpX2wZCzw";
 
     private final UserDAO userDAO = new UserDAO();
 

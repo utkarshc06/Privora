@@ -14,7 +14,7 @@ import com.ciphercore.model.User;
 public class LoginController {
 
     private final String API_KEY =
-            "AIzaSyAtOlGblARQPdRvLruFCUqIl1cYZgaRUUs";
+            "AIzaSyDtZdSWFusLsvWsKgST2qveoWUpX2wZCzw";
 
     private final UserDAO userDAO = new UserDAO();
 

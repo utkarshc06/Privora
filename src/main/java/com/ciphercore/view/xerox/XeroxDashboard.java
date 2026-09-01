@@ -3,17 +3,42 @@ package com.ciphercore.view.xerox;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
+import java.lang.reflect.Method;
+
 public class XeroxDashboard {
+
+    // =========================================================
+    // COLORS
+    // =========================================================
+
+    private static final String SIDEBAR_BG = "#121019";
+    private static final String MAIN_BG = "#09080F";
+
+    private static final String PURPLE_DARK = "#6D28D9";
+    private static final String PURPLE = "#7C3AED";
+    private static final String PURPLE_LIGHT = "#8B5CF6";
+
+    private static final String TEXT = "#F5F3FF";
+    private static final String MUTED = "#9B93AA";
+    private static final String BORDER = "#2A2435";
+
+    // =========================================================
+    // FIELDS
+    // =========================================================
 
     private Scene xeroxScene;
 
@@ -23,12 +48,15 @@ public class XeroxDashboard {
 
     private HBox selectedItem;
 
+    private Runnable logoutAction;
 
     // =========================================================
-    // MAIN XEROX SCENE
+    // MAIN SCENE
     // =========================================================
 
     public Scene getXeroxDashboardScene(Runnable rd) {
+
+        this.logoutAction = rd;
 
         // =====================================================
         // SIDEBAR
@@ -38,92 +66,89 @@ public class XeroxDashboard {
 
         sidebar.setPrefWidth(270);
         sidebar.setMinWidth(270);
+        sidebar.setMaxWidth(270);
 
         sidebar.setStyle(
-                "-fx-background-color: #121019;" +
-                "-fx-border-color: #2A2435;" +
+                "-fx-background-color: " + SIDEBAR_BG + ";" +
+                "-fx-border-color: " + BORDER + ";" +
                 "-fx-border-width: 0 1 0 0;"
         );
 
-
         // =====================================================
-        // LOGO
+        // LOGO SECTION
         // =====================================================
 
         HBox logoSection = new HBox(12);
 
-        logoSection.setAlignment(
-                Pos.CENTER_LEFT
-        );
+        logoSection.setAlignment(Pos.CENTER_LEFT);
 
         logoSection.setPadding(
                 new Insets(20, 18, 20, 18)
         );
 
-
-        // =====================================================
-        // PRIVORA LOGO
-        // =====================================================
+        // Logo circle
 
         Circle logoCircle = new Circle(20);
 
         logoCircle.setFill(
-                Color.web("#7C3AED")
+                Color.web(PURPLE)
         );
 
+        // Image
 
-        Image shieldImage =
-                new Image("/assets/images/privimg.jpeg");
+        ImageView shieldView;
 
+        try {
 
-        ImageView shieldView =
-                new ImageView(shieldImage);
+            Image shieldImage =
+                    new Image("/assets/images/privimg.jpeg");
 
-        shieldView.setFitWidth(28);
-        shieldView.setFitHeight(28);
-        shieldView.setPreserveRatio(true);
+            shieldView =
+                    new ImageView(shieldImage);
 
+            shieldView.setFitWidth(28);
+            shieldView.setFitHeight(28);
+            shieldView.setPreserveRatio(true);
 
-        // Shield container
+        } catch (Exception e) {
+
+            shieldView = new ImageView();
+
+        }
+
+        // Shield box
 
         StackPane shieldBox =
                 new StackPane(shieldView);
 
-        shieldBox.setPrefSize(
-                42,
-                42
-        );
+        shieldBox.setPrefSize(42, 42);
 
         shieldBox.setStyle(
-                "-fx-background-color: #6D28D9;" +
+                "-fx-background-color: " + PURPLE_DARK + ";" +
                 "-fx-background-radius: 50%;" +
                 "-fx-effect: dropshadow(" +
                 "gaussian, rgba(124,58,237,0.65)," +
                 "15, 0.5, 0, 0);"
         );
 
+        // Logo box
 
         StackPane logoBox =
                 new StackPane();
 
-        logoBox.setPrefSize(
-                42,
-                42
-        );
+        logoBox.setPrefSize(42, 42);
 
         logoBox.getChildren().addAll(
                 logoCircle,
                 shieldBox
         );
 
-
         // =====================================================
-        // TITLE
+        // BRAND
         // =====================================================
 
         VBox titleBox =
                 new VBox(2);
-
 
         Label appName =
                 new Label("PRIVORA");
@@ -134,11 +159,8 @@ public class XeroxDashboard {
                 "-fx-font-weight: bold;"
         );
 
-
         Label subtitle =
-                new Label(
-                        "PRIVACY CONTROLLED"
-                );
+                new Label("PRIVACY CONTROLLED");
 
         subtitle.setStyle(
                 "-fx-text-fill: #9189A3;" +
@@ -146,27 +168,22 @@ public class XeroxDashboard {
                 "-fx-font-weight: bold;"
         );
 
-
         titleBox.getChildren().addAll(
                 appName,
                 subtitle
         );
-
 
         logoSection.getChildren().addAll(
                 logoBox,
                 titleBox
         );
 
-
         // =====================================================
         // PANEL TITLE
         // =====================================================
 
         Label panelTitle =
-                new Label(
-                        "XEROX CENTRE PANEL"
-                );
+                new Label("XEROX CENTRE PANEL");
 
         panelTitle.setPadding(
                 new Insets(15, 20, 10, 20)
@@ -178,7 +195,6 @@ public class XeroxDashboard {
                 "-fx-font-weight: bold;"
         );
 
-
         // =====================================================
         // MENU
         // =====================================================
@@ -189,7 +205,6 @@ public class XeroxDashboard {
         menuBox.setPadding(
                 new Insets(5, 10, 10, 10)
         );
-
 
         String[][] menuItems = {
 
@@ -205,7 +220,6 @@ public class XeroxDashboard {
 
         };
 
-
         for (int i = 0;
              i < menuItems.length;
              i++) {
@@ -216,28 +230,21 @@ public class XeroxDashboard {
                             menuItems[i][1]
                     );
 
-
             if (i == 0) {
-
                 setSelected(item);
-
             }
-
 
             menuBox.getChildren().add(item);
         }
 
-
         // =====================================================
-        // MENU SCROLL
+        // SIDEBAR SCROLL
         // =====================================================
 
         ScrollPane menuScroll =
                 new ScrollPane(menuBox);
 
-        menuScroll.setFitToWidth(
-                true
-        );
+        menuScroll.setFitToWidth(true);
 
         menuScroll.setHbarPolicy(
                 ScrollPane.ScrollBarPolicy.NEVER
@@ -248,16 +255,14 @@ public class XeroxDashboard {
         );
 
         menuScroll.setStyle(
-                "-fx-background-color: #121019;" +
-                "-fx-background: #121019;"
+                "-fx-background-color: " + SIDEBAR_BG + ";" +
+                "-fx-background: " + SIDEBAR_BG + ";"
         );
-
 
         VBox.setVgrow(
                 menuScroll,
                 Priority.ALWAYS
         );
-
 
         // =====================================================
         // LOGOUT
@@ -275,11 +280,12 @@ public class XeroxDashboard {
         );
 
         logoutSection.setStyle(
-                "-fx-border-color: #2A2435 transparent transparent transparent;" +
+                "-fx-border-color: " +
+                BORDER +
+                " transparent transparent transparent;" +
                 "-fx-border-width: 1 0 0 0;" +
                 "-fx-cursor: hand;"
         );
-
 
         Label logoutIcon =
                 new Label("⎋");
@@ -288,7 +294,6 @@ public class XeroxDashboard {
                 "-fx-text-fill: #F87171;" +
                 "-fx-font-size: 20px;"
         );
-
 
         Label logoutText =
                 new Label("Logout");
@@ -299,16 +304,10 @@ public class XeroxDashboard {
                 "-fx-font-weight: bold;"
         );
 
-
         logoutSection.getChildren().addAll(
                 logoutIcon,
                 logoutText
         );
-
-
-        // =====================================================
-        // LOGOUT HOVER
-        // =====================================================
 
         logoutSection.setOnMouseEntered(e -> {
 
@@ -318,20 +317,7 @@ public class XeroxDashboard {
                     "-fx-font-weight: bold;"
             );
 
-
-            ScaleTransition scale =
-                    new ScaleTransition(
-                            Duration.millis(120),
-                            logoutSection
-                    );
-
-            scale.setToX(1.03);
-            scale.setToY(1.03);
-
-            scale.play();
-
         });
-
 
         logoutSection.setOnMouseExited(e -> {
 
@@ -341,34 +327,18 @@ public class XeroxDashboard {
                     "-fx-font-weight: bold;"
             );
 
-
-            ScaleTransition scale =
-                    new ScaleTransition(
-                            Duration.millis(120),
-                            logoutSection
-                    );
-
-            scale.setToX(1);
-            scale.setToY(1);
-
-            scale.play();
-
         });
-
 
         logoutSection.setOnMouseClicked(e -> {
 
-            if (rd != null) {
-
-                rd.run();
-
+            if (logoutAction != null) {
+                logoutAction.run();
             }
 
         });
 
-
         // =====================================================
-        // ADD SIDEBAR
+        // ADD SIDEBAR COMPONENTS
         // =====================================================
 
         sidebar.getChildren().addAll(
@@ -378,23 +348,22 @@ public class XeroxDashboard {
                 logoutSection
         );
 
-
         // =====================================================
-        // RIGHT SIDE
+        // RIGHT CONTENT
         // =====================================================
 
         rightContent =
                 new StackPane();
 
         rightContent.setStyle(
-                "-fx-background-color: #0B0910;"
+                "-fx-background-color: " + MAIN_BG + ";"
         );
 
-
-        // Default page
+        // =====================================================
+        // DEFAULT PAGE
+        // =====================================================
 
         showDashboard();
-
 
         // =====================================================
         // ROOT
@@ -403,17 +372,19 @@ public class XeroxDashboard {
         HBox root =
                 new HBox();
 
+        root.setStyle(
+                "-fx-background-color: " + MAIN_BG + ";"
+        );
+
         root.getChildren().addAll(
                 sidebar,
                 rightContent
         );
 
-
         HBox.setHgrow(
                 rightContent,
                 Priority.ALWAYS
         );
-
 
         // =====================================================
         // SCENE
@@ -426,10 +397,23 @@ public class XeroxDashboard {
                         750
                 );
 
-
         return xeroxScene;
     }
 
+    // =========================================================
+    // COMPATIBILITY METHOD
+    // =========================================================
+
+    public Scene getScene() {
+
+        if (xeroxScene == null) {
+
+            getXeroxDashboardScene(null);
+
+        }
+
+        return xeroxScene;
+    }
 
     // =========================================================
     // MENU ITEM
@@ -438,7 +422,6 @@ public class XeroxDashboard {
     private HBox createMenuItem(
             String icon,
             String text) {
-
 
         HBox item =
                 new HBox(15);
@@ -455,13 +438,11 @@ public class XeroxDashboard {
                 Double.MAX_VALUE
         );
 
-
         item.setStyle(
                 "-fx-background-color: transparent;" +
                 "-fx-background-radius: 18;" +
                 "-fx-cursor: hand;"
         );
-
 
         Label iconLabel =
                 new Label(icon);
@@ -469,10 +450,9 @@ public class XeroxDashboard {
         iconLabel.setPrefWidth(22);
 
         iconLabel.setStyle(
-                "-fx-text-fill: #9B93AA;" +
+                "-fx-text-fill: " + MUTED + ";" +
                 "-fx-font-size: 17px;"
         );
-
 
         Label textLabel =
                 new Label(text);
@@ -483,12 +463,10 @@ public class XeroxDashboard {
                 "-fx-font-weight: bold;"
         );
 
-
         item.getChildren().addAll(
                 iconLabel,
                 textLabel
         );
-
 
         // =====================================================
         // HOVER
@@ -503,7 +481,6 @@ public class XeroxDashboard {
         scaleUp.setToX(1.02);
         scaleUp.setToY(1.02);
 
-
         ScaleTransition scaleDown =
                 new ScaleTransition(
                         Duration.millis(120),
@@ -512,7 +489,6 @@ public class XeroxDashboard {
 
         scaleDown.setToX(1.0);
         scaleDown.setToY(1.0);
-
 
         item.setOnMouseEntered(e -> {
 
@@ -535,11 +511,6 @@ public class XeroxDashboard {
 
         });
 
-
-        // =====================================================
-        // EXIT
-        // =====================================================
-
         item.setOnMouseExited(e -> {
 
             if (item != selectedItem) {
@@ -554,7 +525,6 @@ public class XeroxDashboard {
 
         });
 
-
         // =====================================================
         // CLICK
         // =====================================================
@@ -562,108 +532,74 @@ public class XeroxDashboard {
         item.setOnMouseClicked(e -> {
 
             if (selectedItem != null) {
-
-                setNormal(
-                        selectedItem
-                );
-
+                setNormal(selectedItem);
             }
 
-
             setSelected(item);
-
 
             switch (text) {
 
                 case "Dashboard":
-
                     showDashboard();
-
                     break;
-
 
                 case "Incoming Requests":
-
                     showIncomingRequests();
-
                     break;
-
 
                 case "Request Details":
-
                     showRequestDetails();
-
                     break;
-
 
                 case "Secure Viewer":
-
                     showSecureViewer();
-
                     break;
-
 
                 case "Printing":
-
                     showPrinting();
-
                     break;
-
 
                 case "Active Sessions":
-
                     showActiveSessions();
-
                     break;
-
 
                 case "Completed Jobs":
-
                     showCompletedJobs();
-
                     break;
-
 
                 case "History":
-
                     showHistory();
-
                     break;
 
-
                 case "Settings":
-
                     showSettings();
-
                     break;
             }
 
         });
 
-
         return item;
     }
 
-
     // =========================================================
-    // SELECTED
+    // SELECTED MENU
     // =========================================================
 
     private void setSelected(
             HBox item) {
 
-
         selectedItem = item;
 
-
         item.setScaleX(1);
-
         item.setScaleY(1);
-
 
         item.setStyle(
                 "-fx-background-color: linear-gradient(" +
-                "to right, #6D28D9, #8B5CF6);" +
+                "to right, " +
+                PURPLE_DARK +
+                ", " +
+                PURPLE_LIGHT +
+                ");" +
                 "-fx-background-radius: 18;" +
                 "-fx-cursor: hand;" +
                 "-fx-effect: dropshadow(" +
@@ -671,19 +607,16 @@ public class XeroxDashboard {
                 "18, 0.45, 0, 3);"
         );
 
-
         Label icon =
                 (Label) item.getChildren().get(0);
 
         Label text =
                 (Label) item.getChildren().get(1);
 
-
         icon.setStyle(
                 "-fx-text-fill: white;" +
                 "-fx-font-size: 17px;"
         );
-
 
         text.setStyle(
                 "-fx-text-fill: white;" +
@@ -692,14 +625,12 @@ public class XeroxDashboard {
         );
     }
 
-
     // =========================================================
-    // NORMAL
+    // NORMAL MENU
     // =========================================================
 
     private void setNormal(
             HBox item) {
-
 
         item.setStyle(
                 "-fx-background-color: transparent;" +
@@ -707,19 +638,16 @@ public class XeroxDashboard {
                 "-fx-cursor: hand;"
         );
 
-
         Label icon =
                 (Label) item.getChildren().get(0);
 
         Label text =
                 (Label) item.getChildren().get(1);
 
-
         icon.setStyle(
-                "-fx-text-fill: #9B93AA;" +
+                "-fx-text-fill: " + MUTED + ";" +
                 "-fx-font-size: 17px;"
         );
-
 
         text.setStyle(
                 "-fx-text-fill: #D9D3E3;" +
@@ -728,88 +656,211 @@ public class XeroxDashboard {
         );
     }
 
+    // =========================================================
+    // PAGE LOADER
+    // =========================================================
+
+    private void showPage(
+            Object page) {
+
+        try {
+
+            /*
+             * First try getContent()
+             */
+
+            Method contentMethod =
+                    page.getClass()
+                            .getMethod("getContent");
+
+            Object result =
+                    contentMethod.invoke(page);
+
+            if (result instanceof Node node) {
+
+                setRightContent(node);
+
+                return;
+            }
+
+        } catch (Exception ignored) {
+
+        }
+
+        try {
+
+            /*
+             * If getContent() doesn't exist,
+             * try getScene()
+             */
+
+            Method sceneMethod =
+                    page.getClass()
+                            .getMethod("getScene");
+
+            Object result =
+                    sceneMethod.invoke(page);
+
+            if (result instanceof Scene scene) {
+
+                setRightContent(
+                        scene.getRoot()
+                );
+
+                return;
+            }
+
+        } catch (Exception ignored) {
+
+        }
+
+        /*
+         * If neither method exists
+         */
+
+        Label error =
+                new Label(
+                        "Unable to load this page."
+                );
+
+        error.setStyle(
+                "-fx-text-fill: #F87171;" +
+                "-fx-font-size: 18px;" +
+                "-fx-font-weight: bold;"
+        );
+
+        rightContent.getChildren().setAll(
+                error
+        );
+    }
 
     // =========================================================
-    // RIGHT SIDE PAGE METHODS
+    // RIGHT CONTENT + SCROLL
+    // =========================================================
+
+    private void setRightContent(
+            Node node) {
+
+        ScrollPane scrollPane =
+                new ScrollPane(node);
+
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(false);
+
+        scrollPane.setHbarPolicy(
+                ScrollPane.ScrollBarPolicy.NEVER
+        );
+
+        scrollPane.setVbarPolicy(
+                ScrollPane.ScrollBarPolicy.AS_NEEDED
+        );
+
+        scrollPane.setStyle(
+                "-fx-background-color: " + MAIN_BG + ";" +
+                "-fx-background: " + MAIN_BG + ";"
+        );
+
+        rightContent.getChildren().setAll(
+                scrollPane
+        );
+    }
+
+    // =========================================================
+    // DASHBOARD
     // =========================================================
 
     private void showDashboard() {
 
-        rightContent.getChildren().setAll(
-                new XDashboard().getContent()
+        showPage(
+                new XDashboard()
         );
-
     }
 
+    // =========================================================
+    // INCOMING REQUESTS
+    // =========================================================
 
     private void showIncomingRequests() {
 
-        rightContent.getChildren().setAll(
-                new IncomingRequests().getContent()
+        showPage(
+                new IncomingRequests()
         );
-
     }
 
+    // =========================================================
+    // REQUEST DETAILS
+    // =========================================================
 
     private void showRequestDetails() {
 
-        rightContent.getChildren().setAll(
-                new RequestDetails().getContent()
+        showPage(
+                new RequestDetails()
         );
-
     }
 
+    // =========================================================
+    // SECURE VIEWER
+    // =========================================================
 
     private void showSecureViewer() {
 
-        rightContent.getChildren().setAll(
-                new SecureViewer().getContent()
+        showPage(
+                new SecureViewer()
         );
-
     }
 
+    // =========================================================
+    // PRINTING
+    // =========================================================
 
     private void showPrinting() {
 
-        rightContent.getChildren().setAll(
-                new Printing().getContent()
+        showPage(
+                new Printing()
         );
-
     }
 
+    // =========================================================
+    // ACTIVE SESSIONS
+    // =========================================================
 
     private void showActiveSessions() {
 
-        rightContent.getChildren().setAll(
-                new ActiveSessions().getContent()
+        showPage(
+                new ActiveSessions()
         );
-
     }
 
+    // =========================================================
+    // COMPLETED JOBS
+    // =========================================================
 
     private void showCompletedJobs() {
 
-        rightContent.getChildren().setAll(
-                new CompletedJobs().getContent()
+        showPage(
+                new CompletedJobs()
         );
-
     }
 
+    // =========================================================
+    // HISTORY
+    // =========================================================
 
     private void showHistory() {
 
-        rightContent.getChildren().setAll(
-                new History().getContent()
+        showPage(
+                new History()
         );
-
     }
 
+    // =========================================================
+    // SETTINGS
+    // =========================================================
 
     private void showSettings() {
 
-        rightContent.getChildren().setAll(
-                new Settings().getContent()
+        showPage(
+                new Settings()
         );
-
     }
 }
