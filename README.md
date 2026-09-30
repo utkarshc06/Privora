@@ -380,7 +380,7 @@ Before running PRIVORA, make sure the following are installed:
 
 1. Clone the Repository
 
-git clone https://github.com/utkarshc06/PRIVORA_finall.git
+git clone https://github.com/utkarshc06/Privora.git
 
 Navigate into the project:
 
